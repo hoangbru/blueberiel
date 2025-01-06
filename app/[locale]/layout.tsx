@@ -2,12 +2,15 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Toaster } from "react-hot-toast";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "remixicon/fonts/remixicon.css";
 import "../globals.css";
 
 import { FooterContainer, HeaderContainer } from "@/components/layout";
 import { routing } from "@/i18n/routing";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 export async function generateMetadata({
   params: { locale },
@@ -46,10 +49,14 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <HeaderContainer />
-          <Toaster />
-          {children}
-          <FooterContainer />
+          <CartProvider>
+            <WishlistProvider>
+              <HeaderContainer />
+              <Toaster />
+              {children}
+              <FooterContainer />
+            </WishlistProvider>
+          </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

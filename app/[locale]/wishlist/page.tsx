@@ -1,14 +1,14 @@
 import { Fragment } from "react";
-import "./shop.css";
+import "./wishlist.css";
 
 import Breadcrumb from "@/components/template/breadcrumb/Breadcrumb";
-import ShopContainer from "./_components/ShopContainer";
+import WishlistContainer from "./_components/WishlistContainer";
 
-export default function Shop() {
+export default function Wishlist() {
   return (
     <Fragment>
       <Breadcrumb />
-      <ShopContainer />
+      <WishlistContainer />
     </Fragment>
   );
 }
