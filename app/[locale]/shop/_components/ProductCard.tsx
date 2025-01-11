@@ -21,27 +21,27 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
   } = useWishlist();
   const pathname = usePathname();
   const langPrefix = useGetLangPrefix(pathname);
-  
+
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
-      name: product.title,
-      price: product.newPrice,
-      image: product.image,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
       quantity: 1,
     });
-    toast.success(`'${product.title}' has been added to the cart.`);
+    toast.success(`'${product.name}' has been added to the cart.`);
   };
 
   const handleToggleWishlist = () => {
     if (isInWishlist) {
       removeFromWishlist(product.id);
-      toast.success(`'${product.title}' has been removed from the wishlist.`);
+      toast.success(`'${product.name}' has been removed from the wishlist.`);
     } else {
       addToWishlist(product);
-      toast.success(`'${product.title}' has been added to the wishlist.`);
+      toast.success(`'${product.name}' has been added to the wishlist.`);
     }
   };
   return (
@@ -60,12 +60,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
             <div className="inner-img">
               <img
                 className="main-img"
-                src={product.image}
+                src={product.images[0]}
                 alt={`product-${product.slug}`}
               />
               <img
                 className="hover-img"
-                src={product.hoverImage}
+                src={product.images[1]}
                 alt={`product-${product.slug}`}
               />
             </div>
@@ -103,26 +103,39 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
         </div>
         <div className="bb-pro-contact">
           <div className="bb-pro-subtitle">
-            <Link href="#">{product.category}</Link>
+            <span>{product?.category?.name}</span>
             <span className="bb-pro-rating">
-              {Array.from({ length: product.rating }).map((_, i) => (
-                <i key={i} className="ri-star-fill"></i>
-              ))}
-              {Array.from({ length: 5 - product.rating }).map((_, i) => (
-                <i key={i} className="ri-star-line"></i>
+              {[...Array(5)].map((_, i) => (
+                <i
+                  key={i}
+                  className={
+                    i + 1 <= Math.floor(product.rating.average)
+                      ? "ri-star-fill"
+                      : i < product.rating.average
+                      ? "ri-star-half-line"
+                      : "ri-star-line"
+                  }
+                ></i>
               ))}
             </span>
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`${langPrefix}/product/${product.slug}`}>{product.title}</Link>
+            <Link href={`${langPrefix}/product/${product.slug}`}>
+              {product.name}
+            </Link>
           </h4>
-          <p>{product.description}</p>
           <div className="bb-price">
             <div className="inner-price">
-              <span className="new-price">${product.newPrice}</span>
-              <span className="old-price">${product.oldPrice}</span>
+              <span className="new-price">${product.price}</span>
+              <span
+                className={`${product.stock === 0 ? "item-left" : "old-price"}`}
+              >
+                {product.stock === 0 ? "Out of stock" : `$${product.price}`}
+              </span>
             </div>
-            <span className="last-items">{product.weight}</span>
+            <div className="last-items">
+              {product.variants.map((item) => item.size).join(", ")}
+            </div>
           </div>
         </div>
       </div>

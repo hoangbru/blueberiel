@@ -109,7 +109,7 @@ const ProductDetails = ({ product }: ProductProps) => {
         </div>
         <ul className="bb-pro-actions">
           <li className="bb-btn-group">
-            <a href="javascript:void(0)">
+            <a href="">
               <i className="ri-heart-line"></i>
             </a>
           </li>

@@ -124,7 +124,7 @@ export const products: Product[] = [
   {
     id: 9,
     image: "/assets/img/new-product/9.jpg",
-    hoverImage: "/assets/img/new-product/back-9.jpg",
+    hoverImage: "/assets/img/new-product/9.jpg",
     category: "Bakery",
     rating: 5,
     title: "Whole Wheat Bread",

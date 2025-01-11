@@ -58,7 +58,7 @@ const CartSidebar = () => {
                     <span className="flags">
                       <span>Hot</span>
                     </span>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <div className="inner-img">
                         <img
                           className="main-img"
@@ -74,13 +74,13 @@ const CartSidebar = () => {
                     </a>
                     <ul className="bb-pro-actions">
                       <li className="bb-btn-group">
-                        <a href="javascript:void(0)" title="Wishlist">
+                        <a href="#" title="Wishlist">
                           <i className="ri-heart-line"></i>
                         </a>
                       </li>
                       <li className="bb-btn-group">
                         <a
-                          href="javascript:void(0)"
+                          href="#"
                           title="Quick View"
                           data-bs-toggle="modal"
                           data-bs-target="#bry_quickview_modal"
@@ -94,7 +94,7 @@ const CartSidebar = () => {
                         </a>
                       </li>
                       <li className="bb-btn-group">
-                        <a href="javascript:void(0)" title="Add To Cart">
+                        <a href="#" title="Add To Cart">
                           <i className="ri-shopping-bag-4-line"></i>
                         </a>
                       </li>

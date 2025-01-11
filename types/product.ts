@@ -1,14 +1,28 @@
+import { Category } from "./category";
+
 export interface Product {
-  id: number;
-  image: string;
-  hoverImage: string;
-  category: string;
-  rating: number;
-  title: string;
+  id: string | number;
+  name: string;
   description: string;
-  newPrice: number;
-  oldPrice: number;
-  weight: string;
-  availability: boolean;
+  images: string[];
+  category: Category;
+  price: number;
+  stock: number;
+  rating: Rating;
+  variants: Variant[];
   slug: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Variant {
+  id: string | number;
+  size: string;
+  color: string;
+  stock: number;
+}
+
+export interface Rating {
+  average: number;
+  count: number;
 }

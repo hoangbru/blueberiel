@@ -9,7 +9,7 @@ import {
 } from "react";
 
 type CartItem = {
-  id: number;
+  id: string | number;
   name: string;
   image: string;
   price: number;

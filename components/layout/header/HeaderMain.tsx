@@ -27,7 +27,7 @@ const MainMenu = () => {
             <div className="bb-inner-menu-desk">
               {/* Sidebar Toggle Button */}
               <Link
-                href="javascript:void(0)"
+                href="#"
                 className="bb-header-btn bb-sidebar-toggle bb-category-toggle"
               >
                 <IconGridSquare />

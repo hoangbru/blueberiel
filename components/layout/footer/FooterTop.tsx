@@ -42,14 +42,14 @@ const FooterTop = () => {
                 daily needs from our store.
               </p>
               <div className="bb-app-store">
-                <Link href="/javascript:void(0)" className="app-img">
+                <Link href="#" className="app-img">
                   <img
                     src="/assets/img/app/android.png"
                     className="adroid"
                     alt="apple"
                   />
                 </Link>
-                <Link href="/javascript:void(0)" className="app-img">
+                <Link href="#" className="app-img">
                   <img
                     src="/assets/img/app/apple.png"
                     className="apple"
@@ -117,22 +117,22 @@ const FooterTop = () => {
                 <div className="bb-footer-links bb-footer-dropdown">
                   <ul className="align-items-center">
                     <li className="bb-footer-link">
-                      <Link href="/javascript:void(0)">
+                      <Link href="#">
                         <i className="ri-facebook-fill"></i>
                       </Link>
                     </li>
                     <li className="bb-footer-link">
-                      <Link href="/javascript:void(0)">
+                      <Link href="#">
                         <i className="ri-twitter-fill"></i>
                       </Link>
                     </li>
                     <li className="bb-footer-link">
-                      <Link href="/javascript:void(0)">
+                      <Link href="#">
                         <i className="ri-linkedin-fill"></i>
                       </Link>
                     </li>
                     <li className="bb-footer-link">
-                      <Link href="/javascript:void(0)">
+                      <Link href="#">
                         <i className="ri-instagram-line"></i>
                       </Link>
                     </li>

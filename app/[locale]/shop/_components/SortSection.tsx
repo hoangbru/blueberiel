@@ -30,7 +30,7 @@ const SortSection: FC = () => {
               >
                 <i className="ri-apps-line"></i>
               </button>
-              <button
+              {/* <button
                 type="button"
                 className={`grid-btn btn-list-100 ${
                   viewMode === "list" ? "active" : ""
@@ -38,7 +38,7 @@ const SortSection: FC = () => {
                 onClick={() => toggleViewMode("list")}
               >
                 <i className="ri-list-unordered"></i>
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -47,7 +47,7 @@ const SortSection: FC = () => {
             <div className="bb-select-inner">
               <div className="custom-select">
                 <select onChange={handleSortChange}>
-                  <option value="" disabled selected>
+                  <option value="" disabled >
                     Sort by
                   </option>
                   <option value="1">Position</option>

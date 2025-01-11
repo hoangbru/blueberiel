@@ -12,7 +12,7 @@ import {
 type WishlistContextType = {
   wishlist: Product[];
   addItem: (item: Product) => void;
-  removeItem: (id: number) => void;
+  removeItem: (id: string | number) => void;
   clearWishlist: () => void;
 };
 
@@ -45,7 +45,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string | number) => {
     setWishlist((prevWishlist) =>
       prevWishlist.filter((item) => item.id !== id)
     );

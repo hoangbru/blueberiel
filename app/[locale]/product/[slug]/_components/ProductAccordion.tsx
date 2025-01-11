@@ -205,7 +205,7 @@ const ProductAccordion = () => {
                     ></textarea>
                   </div>
                   <div className="input-button">
-                    <a href="javascript:void(0)" className="bb-btn-2">
+                    <a href="" className="bb-btn-2">
                       View Cart
                     </a>
                   </div>
