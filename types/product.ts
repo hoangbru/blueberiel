@@ -10,4 +10,5 @@ export interface Product {
   oldPrice: number;
   weight: string;
   availability: boolean;
+  slug: string;
 }

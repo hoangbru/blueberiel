@@ -14,6 +14,7 @@ export const products: Product[] = [
     oldPrice: 22,
     weight: "500g",
     availability: false,
+    slug: "ground-nuts-oil-pack",
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ export const products: Product[] = [
     oldPrice: 30,
     weight: "100ml",
     availability: true,
+    slug: "organic-litchi-juice-pack",
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ export const products: Product[] = [
     oldPrice: 2,
     weight: "100g",
     availability: true,
+    slug: "crunchy-banana-chips",
   },
   {
     id: 4,
@@ -56,6 +59,7 @@ export const products: Product[] = [
     oldPrice: 15,
     weight: "250g",
     availability: true,
+    slug: "organic-turmeric-powder",
   },
   {
     id: 5,
@@ -70,6 +74,7 @@ export const products: Product[] = [
     oldPrice: 18,
     weight: "1kg",
     availability: true,
+    slug: "fresh-apples-pack",
   },
   {
     id: 6,
@@ -84,6 +89,7 @@ export const products: Product[] = [
     oldPrice: 12,
     weight: "1kg",
     availability: true,
+    slug: "organic-carrot-pack",
   },
   {
     id: 7,
@@ -98,6 +104,7 @@ export const products: Product[] = [
     oldPrice: 24,
     weight: "250g",
     availability: true,
+    slug: "roasted-almonds-pack",
   },
   {
     id: 8,
@@ -112,6 +119,7 @@ export const products: Product[] = [
     oldPrice: 9,
     weight: "1L",
     availability: true,
+    slug: "fresh-milk-bottle",
   },
   {
     id: 9,
@@ -126,6 +134,7 @@ export const products: Product[] = [
     oldPrice: 5,
     weight: "500g",
     availability: true,
+    slug: "whole-wheat-bread",
   },
   {
     id: 10,
@@ -140,6 +149,7 @@ export const products: Product[] = [
     oldPrice: 28,
     weight: "1.5kg",
     availability: true,
+    slug: "fresh-chicken-pack",
   },
   {
     id: 11,
@@ -154,6 +164,7 @@ export const products: Product[] = [
     oldPrice: 35,
     weight: "1kg",
     availability: true,
+    slug: "fresh-salmon-fillet",
   },
   {
     id: 12,
@@ -168,5 +179,6 @@ export const products: Product[] = [
     oldPrice: 10,
     weight: "200g",
     availability: true,
+    slug: "green-tea-pack",
   },
 ];

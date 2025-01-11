@@ -7,7 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "remixicon/fonts/remixicon.css";
 import "../globals.css";
 
-import { FooterContainer, HeaderContainer } from "@/components/layout";
+import {
+  BackToTop,
+  FooterContainer,
+  HeaderContainer,
+  PreLoader,
+} from "@/components/layout";
 import { routing } from "@/i18n/routing";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
@@ -51,9 +56,11 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
             <WishlistProvider>
+              <PreLoader />
               <HeaderContainer />
               <Toaster />
               {children}
+              <BackToTop />
               <FooterContainer />
             </WishlistProvider>
           </CartProvider>

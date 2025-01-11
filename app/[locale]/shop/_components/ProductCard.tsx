@@ -4,6 +4,8 @@ import { Product } from "@/types/product";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
+import { usePathname } from "next/navigation";
+import useGetLangPrefix from "@/hooks/useLangPrefix";
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +19,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
     removeItem: removeFromWishlist,
     addItem: addToWishlist,
   } = useWishlist();
+  const pathname = usePathname();
+  const langPrefix = useGetLangPrefix(pathname);
+  
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
   const handleAddToCart = () => {
@@ -51,17 +56,17 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
           <span className="flags">
             <span>New</span>
           </span>
-          <Link href={`/product/${product.id}`}>
+          <Link href={`${langPrefix}/product/${product.slug}`}>
             <div className="inner-img">
               <img
                 className="main-img"
                 src={product.image}
-                alt={`product-${product.id}`}
+                alt={`product-${product.slug}`}
               />
               <img
                 className="hover-img"
                 src={product.hoverImage}
-                alt={`product-${product.id}`}
+                alt={`product-${product.slug}`}
               />
             </div>
           </Link>
@@ -98,7 +103,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
         </div>
         <div className="bb-pro-contact">
           <div className="bb-pro-subtitle">
-            <Link href="/shop-left-sidebar-col-3.html">{product.category}</Link>
+            <Link href="#">{product.category}</Link>
             <span className="bb-pro-rating">
               {Array.from({ length: product.rating }).map((_, i) => (
                 <i key={i} className="ri-star-fill"></i>
@@ -109,7 +114,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
             </span>
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`/product/${product.id}`}>{product.title}</Link>
+            <Link href={`${langPrefix}/product/${product.slug}`}>{product.title}</Link>
           </h4>
           <p>{product.description}</p>
           <div className="bb-price">
