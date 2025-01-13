@@ -12,12 +12,11 @@ import {
   BackToTop,
   FooterContainer,
   HeaderContainer,
-  PreLoader,
 } from "@/components/layout";
-import { routing } from "@/i18n/routing";
-import { CartProvider } from "@/context/CartContext";
-import { WishlistProvider } from "@/context/WishlistContext";
+import { PreLoader } from "@/components/template";
 
+import { routing } from "@/i18n/routing";
+import AppProviders from "@/providers/AppProviders";
 
 const fontRegular = localFont({
   src: "../fonts/Montserrat.ttf",
@@ -60,16 +59,14 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${fontRegular.className}`}>
         <NextIntlClientProvider messages={messages}>
-          <CartProvider>
-            <WishlistProvider>
-              <PreLoader />
-              <HeaderContainer />
-              <Toaster />
-              {children}
-              <BackToTop />
-              <FooterContainer />
-            </WishlistProvider>
-          </CartProvider>
+          <AppProviders>
+            <PreLoader />
+            <HeaderContainer />
+            <Toaster />
+            {children}
+            <BackToTop />
+            <FooterContainer />
+          </AppProviders>
         </NextIntlClientProvider>
       </body>
     </html>

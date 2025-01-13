@@ -268,7 +268,7 @@ ul.bb-shop-tags li.active-tags a {
 .bb-pro-pagination ul li:not(:last-child) {
   margin-right: 6px;
 }
-.bb-pro-pagination ul li a {
+.bb-pro-pagination ul li span {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   width: 32px;
@@ -292,20 +292,21 @@ ul.bb-shop-tags li.active-tags a {
   align-items: center;
   border-radius: 10px;
   border: 1px solid #eee;
+  cursor: pointer;
 }
-.bb-pro-pagination ul li a:hover {
+.bb-pro-pagination ul li span:hover {
   background-color: #3d4750;
   color: #fff;
 }
-.bb-pro-pagination ul li a.next,
-.bb-pro-pagination ul li a.prev {
+.bb-pro-pagination ul li span.next,
+.bb-pro-pagination ul li span.prev {
   width: auto;
   padding: 0 13px;
   color: #fff;
   background-color: #3d4750;
   line-height: 30px;
 }
-.bb-pro-pagination ul li a.next i {
+.bb-pro-pagination ul li span.next i {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   margin-left: 10px;
@@ -314,7 +315,7 @@ ul.bb-shop-tags li.active-tags a {
   color: #fff;
 }
 
-.bb-pro-pagination ul li a.prev i {
+.bb-pro-pagination ul li span.prev i {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   margin-right: 10px;
@@ -322,7 +323,7 @@ ul.bb-shop-tags li.active-tags a {
   width: 8px;
   color: #fff;
 }
-.bb-pro-pagination ul li.active a {
+.bb-pro-pagination ul li.active span {
   background-color: #3d4750;
   color: #fff;
 }

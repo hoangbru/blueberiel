@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import "./product.css";
 
-import Breadcrumb from "@/components/template/breadcrumb/Breadcrumb";
 import ProductContainer from "./_components/ProductContainer";
+import { Breadcrumb } from "@/components/template";
 
 export default async function Product({
   params,
@@ -10,7 +10,6 @@ export default async function Product({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
-  console.log(slug)
   return (
     <Fragment>
       <Breadcrumb />

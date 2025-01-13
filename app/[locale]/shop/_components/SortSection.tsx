@@ -1,17 +1,19 @@
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
+
+import CustomSelectDropdown from "./CustomSelectDropdown";
+import { useQuery } from "@/context/QueryContext";
+import { sortOptions } from "@/data/products";
 
 const SortSection: FC = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const { setQuery } = useQuery();
 
-  // Handle view mode toggle
   const toggleViewMode = (mode: "grid" | "list") => {
     setViewMode(mode);
   };
 
-  // Handle sorting option change
-  const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const sortValue = event.target.value;
-    console.log("Selected sort option:", sortValue);
+  const handleSortChange = (value: string) => {
+    setQuery("sort", value);
   };
 
   return (
@@ -46,17 +48,12 @@ const SortSection: FC = () => {
           <div className="col-6">
             <div className="bb-select-inner">
               <div className="custom-select">
-                <select onChange={handleSortChange}>
-                  <option value="" disabled >
-                    Sort by
-                  </option>
-                  <option value="1">Position</option>
-                  <option value="2">Relevance</option>
-                  <option value="3">Name, A to Z</option>
-                  <option value="4">Name, Z to A</option>
-                  <option value="5">Price, low to high</option>
-                  <option value="6">Price, high to low</option>
-                </select>
+                <div className="select">
+                  <CustomSelectDropdown
+                    options={sortOptions}
+                    onChange={handleSortChange}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Category } from "@/types/category";
 import { fetcher } from "@/utils/fetcher";
 import { ResponseApi } from "@/types/response";
+import { useQuery } from "@/context/QueryContext";
 
 type CategoriesResponse = ResponseApi<{
   categories: Category[];
@@ -14,23 +15,31 @@ type CategoriesResponse = ResponseApi<{
 const CategorySelect = () => {
   const [isLoadingFetching, setIsLoadingFetching] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<
-    string | number | null
-  >(null);
+  const { query, setQuery } = useQuery();
 
   useEffect(() => {
     async function fetchCategories() {
-      const { data, meta }: CategoriesResponse = await fetcher(
-        "api/categories"
-      );
-      setCategories(data.categories);
-      setIsLoadingFetching(false);
+      try {
+        const { data }: CategoriesResponse = await fetcher("api/categories");
+        setCategories(data.categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoadingFetching(false);
+      }
     }
     fetchCategories();
   }, []);
 
   const handleCheckboxChange = (categoryId: string | number) => {
-    setSelectedCategory(categoryId === selectedCategory ? null : categoryId);
+    if (query?.category === categoryId) {
+      setQuery("category", "");
+    } else {
+      setQuery(
+        "category",
+        categoryId === query.category ? "" : categoryId.toString()
+      );
+    }
   };
 
   return (
@@ -48,7 +57,7 @@ const CategorySelect = () => {
                 <div className="bb-sidebar-block-item">
                   <input
                     type="checkbox"
-                    checked={selectedCategory === category.id}
+                    checked={query.category === category.id}
                     onChange={() => handleCheckboxChange(category.id)}
                   />
                   <Link href="#">{category.name}</Link>

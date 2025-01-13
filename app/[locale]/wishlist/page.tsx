@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import "./wishlist.css";
 
-import Breadcrumb from "@/components/template/breadcrumb/Breadcrumb";
 import WishlistContainer from "./_components/WishlistContainer";
+import { Breadcrumb } from "@/components/template";
 
 export default function Wishlist() {
   return (

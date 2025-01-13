@@ -26,3 +26,8 @@ export interface Rating {
   average: number;
   count: number;
 }
+
+export interface OptionSort {
+  value: string;
+  label: string;
+}

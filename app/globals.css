@@ -374,11 +374,11 @@ select {
 
 .select-options {
   min-width: 190px;
-  max-height: 200px;
+  max-height: 0;
+  transition: max-height 0.3s ease;
   margin: 0;
   padding: 10px 0;
   overflow-y: auto;
-  display: none;
   position: absolute;
   top: 34px;
   right: 0;
@@ -390,6 +390,9 @@ select {
   -webkit-box-shadow: 2px 2px 15px 0 rgba(0, 0, 0, 0.07);
   box-shadow: 2px 2px 15px 0 rgba(0, 0, 0, 0.07);
   border: 1px solid #eee;
+}
+.select-options.open {
+  max-height: 200px;
 }
 .select-options li {
   -webkit-transition: all 0.3s ease-in-out;

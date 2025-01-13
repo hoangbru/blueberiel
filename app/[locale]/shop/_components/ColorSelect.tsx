@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useQuery } from "@/context/QueryContext";
+import { colors } from "@/data/products";
 
 const ColorSelect = () => {
-  const [selectedColor, setSelectedColor] = useState(0);
+  const { query, setQuery } = useQuery();
 
-  const handleColorClick = (index: number) => {
-    setSelectedColor(index);
+  const handleColorClick = (color: string) => {
+    if (query?.color === color) {
+      setQuery("color", "");
+    } else {
+      setQuery("color", color);
+    }
   };
 
   return (
@@ -16,14 +21,19 @@ const ColorSelect = () => {
       </div>
       <div className="bb-color-contact">
         <ul>
-          {Array.from({ length: 10 }).map((_, index) => (
+          {colors.map((color) => (
             <li
-              key={index}
-              className={index === selectedColor ? "color-sidebar-active" : ""}
-              onClick={() => handleColorClick(index)}
+              key={color}
+              className={color === query.color ? "color-sidebar-active" : ""}
+              onClick={() => handleColorClick(color)}
             >
               <div className="bb-sidebar-block-item">
-                <span className={`pro-color-${index + 1}`}></span>
+                <span
+                  style={{
+                    backgroundColor: `#${color}`,
+                    border: color === query.color ? "2px solid #000" : "none",
+                  }}
+                ></span>
               </div>
             </li>
           ))}

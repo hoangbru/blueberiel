@@ -44,6 +44,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
       toast.success(`'${product.name}' has been added to the wishlist.`);
     }
   };
+
+  const colorsProduct = product.variants.map((item) => item.color);
+  console.log(colorsProduct);
   return (
     <div
       className="col-md-4 col-6 mb-24 bb-product-box pro-bb-content"
@@ -102,6 +105,26 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
           </ul>
         </div>
         <div className="bb-pro-contact">
+          <div className="bb-pro-title">
+            <div className="bb-color-contact">
+              <ul>
+                {colorsProduct.map((color) => (
+                  <li>
+                    <div className="bb-sidebar-block-item">
+                      <span
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                          backgroundColor: `#${color}`,
+                          border: "1px solid #e3e3e3"
+                        }}
+                      ></span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
           <div className="bb-pro-subtitle">
             <span>{product?.category?.name}</span>
             <span className="bb-pro-rating">
