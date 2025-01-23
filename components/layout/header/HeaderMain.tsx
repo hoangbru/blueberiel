@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { IconGridSquare, IconShield } from "@/components/icons";
-import useGetLangPrefix from "@/hooks/useLangPrefix";
+
+import { useAppSetting } from "@/context/AppContext";
 
 const MainMenu = () => {
-  const pathname = usePathname();
-  const langPrefix = useGetLangPrefix(pathname);
+  const { settings } = useAppSetting();
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -52,7 +51,7 @@ const MainMenu = () => {
                   {navItems.map((item, index) => (
                     <li className="nav-item" key={index}>
                       <Link
-                        href={`${langPrefix}${item.href}`}
+                        href={`${settings.langPrefix}${item.href}`}
                         className="nav-link"
                       >
                         {item.icon && item.icon} {item.label}

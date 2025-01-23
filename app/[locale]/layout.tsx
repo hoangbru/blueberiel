@@ -1,4 +1,4 @@
-import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
@@ -6,6 +6,8 @@ import { Toaster } from "react-hot-toast";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "remixicon/fonts/remixicon.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../globals.css";
 
 import {
@@ -18,8 +20,10 @@ import { PreLoader } from "@/components/template";
 import { routing } from "@/i18n/routing";
 import AppProviders from "@/providers/AppProviders";
 
-const fontRegular = localFont({
-  src: "../fonts/Montserrat.ttf",
+const fontRegular = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export async function generateMetadata({
@@ -56,8 +60,8 @@ export default async function LocaleLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <html lang={locale}>
-      <body className={`${fontRegular.className}`}>
+    <html lang={locale} className={fontRegular.className}>
+      <body>
         <NextIntlClientProvider messages={messages}>
           <AppProviders>
             <PreLoader />

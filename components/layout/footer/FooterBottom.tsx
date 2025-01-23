@@ -2,13 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-import useGetLangPrefix from "@/hooks/useLangPrefix";
+import { useAppSetting } from "@/context/AppContext";
 
 const FooterBottom = () => {
-  const pathname = usePathname();
-  const langPrefix = useGetLangPrefix(pathname);
+  const { settings } = useAppSetting();
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
   );
@@ -26,7 +24,7 @@ const FooterBottom = () => {
               <div className="footer-bottom-copy">
                 <div className="bb-copy">
                   Copyright © {currentYear}
-                  <Link className="site-name" href={`${langPrefix}/`}>
+                  <Link className="site-name" href={`${settings.langPrefix}/`}>
                     Blueberiel
                   </Link>{" "}
                   all rights reserved.

@@ -10,7 +10,6 @@ export type QueryParams = {
   minPrice?: string;
   maxPrice?: string;
   category?: string;
-  color?: string;
   size?: string;
 };
 

@@ -1,121 +1,118 @@
 "use client";
 
-import toast from "react-hot-toast";
-import { useCart } from "@/context/CartContext";
-import { Product } from "@/types/product";
+import { Fragment, useEffect, useState } from "react";
 
-interface ProductProps {
+import RatingStar from "@/components/template/RatingStar";
+import ActionButtons from "./ActionButtons";
+
+import { sale } from "@/constants/value";
+import { Product, Variant } from "@/types/product";
+import { formatPrice } from "@/utils/format";
+
+interface ProductDetailsProps {
   product: Product;
 }
 
-const ProductDetails = ({ product }: ProductProps) => {
-  const { cart, addItem, updateQuantity } = useCart();
-  const quantity = cart.find((item) => item.id === product.id)
-    ?.quantity as number;
+const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const [variantSelected, setVariantSelected] = useState<Variant>(
+    product.variants[0]
+  );
 
-  const addToCart = () => {
-    addItem({
-      id: product.id,
-      name: product.title,
-      price: product.newPrice,
-      image: product.image,
-      quantity: 1,
-    });
-    toast.success(`'${product.title}' has been added to the cart.`);
+  const newPrice = product.price * (1 - sale / 100);
+  const outOfStock = product.stock <= 0;
+
+  const SizeProductSelect = () => {
+    const handleSizeClick = (newVariant: Variant) => {
+      if (outOfStock || variantSelected?.id === newVariant.id) return;
+      setVariantSelected(newVariant);
+    };
+
+    return (
+      <div className="bb-single-pro-weight">
+        <div className="pro-title">
+          <h4>Size</h4>
+        </div>
+        <div className="bb-sizes">
+          <ul>
+            {product.variants.map((variant, index) => (
+              <li
+                key={index}
+                className={
+                  outOfStock
+                    ? "disabled"
+                    : variant.size === variantSelected?.size
+                    ? "active"
+                    : ""
+                }
+                onClick={() => handleSizeClick(variant)}
+              >
+                <span>{variant.size}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
   };
+
   return (
-    <div className="bb-single-pro-contact">
-      <div className="bb-sub-title">
-        <h4>{product.title}</h4>
-      </div>
-      <div className="bb-single-rating">
-        <span className="bb-pro-rating">
-          {[...Array(5)].map((_, index) => (
-            <i
-              key={index}
-              className={
-                index + 1 <= Math.floor(product.rating)
-                  ? "ri-star-fill"
-                  : index + 1 - product.rating <= 0.5
-                  ? "ri-star-half-line"
-                  : "ri-star-line"
-              }
-            ></i>
-          ))}
-        </span>
-        <span className="bb-read-review">
-          |&nbsp;&nbsp;
-          <a href="#bb-spt-nav-review">{product.rating} Ratings</a>
-        </span>
-      </div>
-      <p>{product.description}</p>
-      <div className="bb-single-price-wrap">
-        <div className="bb-single-price">
-          <div className="price">
-            <h5>
-              ${product.newPrice.toFixed(2)} <span>-{product.newPrice}%</span>
-            </h5>
+    <Fragment>
+      <div className="bb-single-pro-contact">
+        <div className="bb-sub-title">
+          <h4>{product.name}</h4>
+        </div>
+        <div className="bb-single-rating">
+          <RatingStar rating={product.rating} />
+          <span className="bb-read-review">
+            |&nbsp;&nbsp;
+            <a href="#bb-spt-nav-review">{product.rating.count} Ratings</a>
+          </span>
+        </div>
+        <p>{product.description}</p>
+        <div className="bb-single-price-wrap">
+          <div className="bb-single-price">
+            <div className="price">
+              <h5>
+                {formatPrice(newPrice)} <span>-{sale}%</span>
+              </h5>
+            </div>
+            <div className="mrp">
+              <p>
+                M.R.P. : <span>{formatPrice(product.price)}</span>
+              </p>
+            </div>
           </div>
-          <div className="mrp">
-            <p>
-              M.R.P. : <span>${product.oldPrice.toFixed(2)}</span>
-            </p>
+          <div className="bb-single-price">
+            <div className="sku">
+              <h5>SKU#: {product.slug}</h5>
+            </div>
+            <div className="stock">
+              <span style={outOfStock ? { color: "red" } : {}}>
+                {outOfStock ? "Out of stock" : `In stock: ${variantSelected.stock}`}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="bb-single-price">
-          <div className="sku">
-            <h5>SKU#: {product.id}</h5>
-          </div>
-          <div className="stock">
-            <span>{product.availability}</span>
-          </div>
-        </div>
+        {/* <div className="bb-single-list">
+          <ul>
+            <li>
+              <span>Closure :</span> Hook & Loop
+            </li>
+            <li>
+              <span>Sole :</span> Polyvinyl Chloride
+            </li>
+            <li>
+              <span>Width :</span> Medium
+            </li>
+            <li>
+              <span>Outer Material :</span> A-Grade Standard Quality
+            </li>
+          </ul>
+        </div> */}
+        <SizeProductSelect />
+        <ActionButtons product={product} variantSelected={variantSelected} />
       </div>
-      <div className="bb-single-list">
-        <ul>
-          {/* {product.specifications.map((spec) => (
-                            <li key={spec.label}>
-                              <span>{spec.label} :</span> {spec.value}
-                            </li>
-                          ))} */}
-        </ul>
-      </div>
-      <div className="bb-single-qty">
-        <div className="qty-plus-minus">
-          <div
-            className="dec bb-qtybtn"
-            onClick={() => updateQuantity(product.id, quantity - 1)}
-          >
-            -
-          </div>
-          <input
-            className="qty-input"
-            type="text"
-            value={quantity}
-            min="1"
-            onChange={(e) => updateQuantity(product.id, Number(e.target.value))}
-          />
-          <div
-            className="inc bb-qtybtn"
-            onClick={() => updateQuantity(product.id, quantity + 1)}
-          >
-            +
-          </div>
-        </div>
-        <div className="buttons">
-          <button onClick={addToCart} className="bb-btn-2">
-            Add To Cart
-          </button>
-        </div>
-        <ul className="bb-pro-actions">
-          <li className="bb-btn-group">
-            <a href="">
-              <i className="ri-heart-line"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </Fragment>
   );
 };
 

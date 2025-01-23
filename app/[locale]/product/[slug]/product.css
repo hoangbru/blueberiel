@@ -227,6 +227,7 @@
 }
 .bb-single-pro-contact .bb-single-qty .qty-plus-minus {
   margin: 2px;
+  background-color: #f4f4f4;
 }
 .bb-single-pro-contact .bb-single-qty .buttons {
   margin: 2px;
@@ -244,7 +245,7 @@
   display: -ms-flexbox;
   display: flex;
 }
-.bb-single-pro-contact .bb-single-qty .bb-pro-actions a {
+.bb-single-pro-contact .bb-single-qty .bb-pro-actions span.button-action {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   width: 40px;
@@ -264,18 +265,32 @@
   background-color: #fff;
   border: 1px solid #eee;
   border-radius: 10px;
+  cursor: pointer;
 }
-.bb-single-pro-contact .bb-single-qty .bb-pro-actions a i {
+.bb-single-pro-contact .bb-single-qty .bb-pro-actions span.button-action i {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   font-size: 16px;
   color: #777;
   line-height: 10px;
 }
-.bb-single-pro-contact .bb-single-qty .bb-pro-actions a:hover {
+
+.bb-single-pro-contact .bb-single-qty .bb-pro-actions span.button-action.active {
+  background-color: #6c7fd8 !important;
+  border-color: #6c7fd8 !important;
+}
+.bb-single-pro-contact .bb-single-qty .bb-pro-actions span.button-action.active i {
+  color: #fff !important;
+}
+
+.bb-single-pro-contact .bb-single-qty .bb-pro-actions span.button-action:hover {
   background-color: #6c7fd8;
 }
-.bb-single-pro-contact .bb-single-qty .bb-pro-actions a:hover i {
+.bb-single-pro-contact
+  .bb-single-qty
+  .bb-pro-actions
+  span.button-action:hover
+  i {
   color: #fff;
 }
 

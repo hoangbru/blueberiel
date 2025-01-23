@@ -18,7 +18,6 @@ export interface Product {
 export interface Variant {
   id: string | number;
   size: string;
-  color: string;
   stock: number;
 }
 

@@ -8,19 +8,27 @@ import {
   ReactNode,
 } from "react";
 
-type CartItem = {
+import { Variant } from "@/types/product";
+import toast from "react-hot-toast";
+
+export type CartItem = {
   id: string | number;
   name: string;
-  image: string;
   price: number;
+  image: string;
+  variant: Variant;
   quantity: number;
 };
 
 type CartContextType = {
   cart: CartItem[];
   addItem: (item: CartItem) => void;
-  removeItem: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  removeItem: (id: string | number, variantId?: string | number) => void;
+  updateQuantity: (
+    id: string | number,
+    quantity: number,
+    variantId?: string | number
+  ) => void;
   clearCart: () => void;
 };
 
@@ -37,34 +45,85 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (cart.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addItem = (item: CartItem) => {
+  const addItem = (product: CartItem) => {
+    if (product.variant.stock < 1) {
+      toast.error(`'${product.name}' is out of stock.`);
+      return;
+    }
+  
     setCart((prevCart) => {
-      const existingItem = prevCart.find((i) => i.id === item.id);
-      if (existingItem) {
-        return prevCart.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+      const index = prevCart.findIndex(
+        (item) => item.id === product.id && item.variant.id === product.variant.id
+      );
+  
+      if (index !== -1) {
+        const updatedCart = [...prevCart];
+        const currentQuantity = updatedCart[index].quantity;
+        const newQuantity = Math.min(
+          currentQuantity + product.quantity,
+          product.variant.stock
         );
+  
+        if (newQuantity > currentQuantity) {
+          updatedCart[index].quantity = newQuantity;
+          toast.success(`'${product.name}' quantity has been updated.`);
+        } else {
+          toast.error(
+            `'${product.name}' has reached the maximum stock limit.`
+          );
+        }
+  
+        return updatedCart;
       } else {
-        return [...prevCart, item];
+        if (product.quantity > product.variant.stock) {
+          toast.error(
+            `Only ${product.variant.stock} '${product.name}' are available.`
+          );
+          return [...prevCart, { ...product, quantity: product.variant.stock }];
+        }
+  
+        toast.success(`'${product.name}' has been added to the cart.`);
+        return [...prevCart, product];
       }
     });
   };
+  
 
-  const removeItem = (id: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  const removeItem = (id: string | number, variantId?: string | number) => {
+    setCart((prevCart) => {
+      const itemExists = prevCart.some(
+        (item) => item.id === id && item.variant.id === variantId
+      );
+      if (!itemExists) return prevCart;
+
+      return prevCart.filter(
+        (item) => !(item.id === id && item.variant.id === variantId)
+      );
+    });
   };
 
-  const updateQuantity = (id: number, quantity: number) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
-      )
-    );
+  const updateQuantity = (
+    id: string | number,
+    quantity: number,
+    variantId?: string | number
+  ) => {
+    if (quantity < 1) return;
+
+    setCart((prevCart) => {
+      const itemExists = prevCart.some(
+        (item) => item.id === id && item.variant.id === variantId
+      );
+      if (!itemExists) return prevCart;
+
+      return prevCart.map((item) =>
+        item.id === id && item.variant.id === variantId
+          ? { ...item, quantity: Math.min(item.variant.stock, quantity) }
+          : item
+      );
+    });
   };
 
   const clearCart = () => {

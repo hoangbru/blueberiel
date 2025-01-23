@@ -1,26 +1,58 @@
-const images = [
-  "/assets/img/new-product/1.jpg",
-  "/assets/img/new-product/2.jpg",
-  "/assets/img/new-product/3.jpg",
-  "/assets/img/new-product/4.jpg",
-  "/assets/img/new-product/5.jpg",
-];
+import { FC, useRef } from "react";
+import Slider, { Settings } from "react-slick";
 
-const ProductSlider = () => {
+import { ZoomImage } from "@/components/template";
+
+interface ProductSliderProps {
+  images: string[];
+}
+
+const ProductSlider: FC<ProductSliderProps> = ({ images }) => {
+  const mainSliderRef = useRef<Slider | null>(null);
+  const thumbSliderRef = useRef<Slider | null>(null);
+
+  const mainSliderSettings: Settings = {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    fade: true,
+    asNavFor: thumbSliderRef.current ?? undefined,
+  };
+
+  const thumbSliderSettings: Settings = {
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    dots: false,
+    arrows: true,
+    focusOnSelect: true,
+    asNavFor: mainSliderRef.current ?? undefined,
+  };
+
   return (
     <div className="single-pro-slider">
-      <div className="single-product-cover">
+      {/* Main slider */}
+      <Slider
+        {...mainSliderSettings}
+        ref={mainSliderRef}
+        className="single-product-cover"
+      >
         {images.map((image, index) => (
-          <div className="single-slide zoom-image-hover" key={index}>
+          <ZoomImage key={index}>
             <img
               className="img-responsive"
               src={image}
               alt={`product-${index + 1}`}
             />
-          </div>
+          </ZoomImage>
         ))}
-      </div>
-      <div className="single-nav-thumb">
+      </Slider>
+
+      {/* Thumbnail slider */}
+      <Slider
+        {...thumbSliderSettings}
+        ref={thumbSliderRef}
+        className="single-nav-thumb"
+      >
         {images.map((image, index) => (
           <div className="single-slide" key={index}>
             <img
@@ -30,7 +62,7 @@ const ProductSlider = () => {
             />
           </div>
         ))}
-      </div>
+      </Slider>
     </div>
   );
 };

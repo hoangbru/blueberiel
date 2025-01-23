@@ -2,16 +2,17 @@
 
 import { useState, useEffect, MouseEvent } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { IconGridSquare, IconStar, IconUser } from "@/components/icons";
 import CartSidebar from "@/components/layout/header/_components/CartSidebar";
 import MobileHeader from "./MobileHeader";
-import useGetLangPrefix from "@/hooks/useLangPrefix";
+
+import { useAppSetting } from "@/context/AppContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 const BottomHeader = () => {
-  const pathname = usePathname();
-  const langPrefix = useGetLangPrefix(pathname);
+  const { settings } = useAppSetting();
+  const { wishlist } = useWishlist();
   const options = ["vegetables", "Cold Drinks", "Fruits", "Bakery"];
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +48,7 @@ const BottomHeader = () => {
               <div className="cols bb-logo-detail">
                 {/* Header Logo Start */}
                 <div className="header-logo">
-                  <Link href={`${langPrefix}/`}>
+                  <Link href={`${settings.langPrefix}/`}>
                     <img
                       src="/assets/img/logo/logo.png"
                       alt="logo"
@@ -113,7 +114,7 @@ const BottomHeader = () => {
                       <ul className="bb-dropdown-menu">
                         <li>
                           <Link
-                            href={`${langPrefix}/register`}
+                            href={`${settings.langPrefix}/register`}
                             className="dropdown-item"
                           >
                             Register
@@ -121,7 +122,7 @@ const BottomHeader = () => {
                         </li>
                         <li>
                           <Link
-                            href={`${langPrefix}/checkout`}
+                            href={`${settings.langPrefix}/checkout`}
                             className="dropdown-item"
                           >
                             Checkout
@@ -129,7 +130,7 @@ const BottomHeader = () => {
                         </li>
                         <li>
                           <Link
-                            href={`${langPrefix}/login`}
+                            href={`${settings.langPrefix}/login`}
                             className="dropdown-item"
                           >
                             Login
@@ -138,7 +139,7 @@ const BottomHeader = () => {
                       </ul>
                     </div>
                     <Link
-                      href={`${langPrefix}/wishlist`}
+                      href={`${settings.langPrefix}/wishlist`}
                       className="bb-header-btn bb-wish-toggle"
                       title="Wishlist"
                     >
@@ -147,7 +148,8 @@ const BottomHeader = () => {
                       </div>
                       <div className="bb-btn-desc">
                         <span className="bb-btn-title">
-                          <b className="bb-wishlist-count">3</b> items
+                          <b className="bb-wishlist-count">{wishlist.length}</b>{" "}
+                          items
                         </span>
                         <span className="bb-btn-stitle">Wishlist</span>
                       </div>

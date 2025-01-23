@@ -12,7 +12,7 @@ export default async function Product({
   const slug = (await params).slug;
   return (
     <Fragment>
-      <Breadcrumb />
+      <Breadcrumb title="Product"/>
       <ProductContainer slug={slug}/>
     </Fragment>
   );

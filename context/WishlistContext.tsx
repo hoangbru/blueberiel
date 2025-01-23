@@ -8,11 +8,11 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import toast from "react-hot-toast";
 
 type WishlistContextType = {
   wishlist: Product[];
-  addItem: (item: Product) => void;
-  removeItem: (id: string | number) => void;
+  toggleWishlistItem: (item: Product) => void;
   clearWishlist: () => void;
 };
 
@@ -31,24 +31,21 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (wishlist.length > 0) {
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    }
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
-  const addItem = (item: Product) => {
+  const toggleWishlistItem = (product: Product) => {
     setWishlist((prevWishlist) => {
-      if (!prevWishlist.find((i) => i.id === item.id)) {
-        return [...prevWishlist, item];
-      }
-      return prevWishlist;
-    });
-  };
+      const itemExists = prevWishlist.some((item) => item.id === product.id);
 
-  const removeItem = (id: string | number) => {
-    setWishlist((prevWishlist) =>
-      prevWishlist.filter((item) => item.id !== id)
-    );
+      if (itemExists) {
+        toast.success(`'${product.name}' has been removed from the wishlist.`);
+        return prevWishlist.filter((item) => item.id !== product.id);
+      } else {
+        toast.success(`'${product.name}' has been added to the wishlist.`);
+        return [...prevWishlist, product];
+      }
+    });
   };
 
   const clearWishlist = () => {
@@ -57,7 +54,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <WishlistContext.Provider
-      value={{ wishlist, addItem, removeItem, clearWishlist }}
+      value={{ wishlist, toggleWishlistItem, clearWishlist }}
     >
       {children}
     </WishlistContext.Provider>

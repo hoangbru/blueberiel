@@ -1,12 +1,11 @@
 "use client";
 
-import useGetLangPrefix from "@/hooks/useLangPrefix";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+import { useAppSetting } from "@/context/AppContext";
 
 const FooterTop = () => {
-  const pathname = usePathname();
-  const langPrefix = useGetLangPrefix(pathname);
+  const { settings } = useAppSetting();
 
   const footerNavItems = [
     { href: "/about", label: "About Us" },
@@ -68,7 +67,7 @@ const FooterTop = () => {
                 <ul className="align-items-center">
                   {footerNavItems.map((item, index) => (
                     <li className="bb-footer-link" key={index}>
-                      <Link href={`${langPrefix}${item.href}`}>
+                      <Link href={`${settings.langPrefix}${item.href}`}>
                         {item.label}
                       </Link>
                     </li>
