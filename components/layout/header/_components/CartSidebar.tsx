@@ -1,101 +1,40 @@
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import Link from "next/link";
+import Slider, { Settings } from "react-slick";
 
 import { IconCart } from "@/components/icons";
-import { useCart } from "@/context/CartContext";
+import RelatedItem from "./RelatedItem";
+
 import { useAppSetting } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
+import { valueAddedTax } from "@/constants/value";
 import { formatPrice } from "@/utils/format";
+import { useWishlist } from "@/context/WishlistContext";
 
 const CartSidebar = () => {
   const { settings } = useAppSetting();
+  const { wishlist } = useWishlist();
   const { cart, removeItem, updateQuantity } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const toggleCart = () => setIsCartOpen(!isCartOpen);
-
+  const mainSliderSettings: Settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    fade: true,
+    arrows: true,
+  };
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const vat = subTotal * 0.1;
+  const vat = subTotal * (valueAddedTax / 100);
   const total = subTotal + vat;
 
-  const RelatedItems = () => {
-    return (
-      <div className="bb-deal-card mb-24">
-        <div className="bb-pro-box">
-          <div className="bb-pro-img">
-            <span className="flags">
-              <span>Hot</span>
-            </span>
-            <a href="#">
-              <div className="inner-img">
-                <img
-                  className="main-img"
-                  src="/assets/img/product/2.jpg"
-                  alt="product-2"
-                />
-                <img
-                  className="hover-img"
-                  src="/assets/img/product/back-2.jpg"
-                  alt="product-2"
-                />
-              </div>
-            </a>
-            <ul className="bb-pro-actions">
-              <li className="bb-btn-group">
-                <a href="#" title="Wishlist">
-                  <i className="ri-heart-line"></i>
-                </a>
-              </li>
-              <li className="bb-btn-group">
-                <a
-                  href="#"
-                  title="Quick View"
-                  data-bs-toggle="modal"
-                  data-bs-target="#bry_quickview_modal"
-                >
-                  <i className="ri-eye-line"></i>
-                </a>
-              </li>
-              <li className="bb-btn-group">
-                <a href="compare.html" title="Compare">
-                  <i className="ri-repeat-line"></i>
-                </a>
-              </li>
-              <li className="bb-btn-group">
-                <a href="#" title="Add To Cart">
-                  <i className="ri-shopping-bag-4-line"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="bb-pro-contact">
-            <div className="bb-pro-subtitle">
-              <a href="shop-left-sidebar-col-3.html">Juice</a>
-              <span className="bb-pro-rating">
-                <i className="ri-star-fill"></i>
-                <i className="ri-star-fill"></i>
-                <i className="ri-star-fill"></i>
-                <i className="ri-star-fill"></i>
-                <i className="ri-star-line"></i>
-              </span>
-            </div>
-            <h4 className="bb-pro-title">
-              <a href="product-left-sidebar.html">Organic Apple Juice Pack</a>
-            </h4>
-            <div className="bb-price">
-              <div className="inner-price">
-                <span className="new-price">$15</span>
-                <span className="item-left">3 Left</span>
-              </div>
-              <span className="last-items">100 ml</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   const Banner = () => {
     return (
@@ -105,7 +44,9 @@ const CartSidebar = () => {
           <div className="detail">
             <h4>Organic & Fresh</h4>
             <h3>Vegetables</h3>
-            <a href="shop-left-sidebar-col-3.html">Buy Now</a>
+            <Link href={`${settings.langPrefix}/shop`} onClick={toggleCart}>
+              Buy Now
+            </Link>
           </div>
         </div>
       </div>
@@ -147,8 +88,17 @@ const CartSidebar = () => {
               </div>
             </div>
             <div className="bb-cart-box mb-minus-24 cart-related bb-border-right">
-              {/* Related Items */}
-              <RelatedItems />
+              <Slider {...mainSliderSettings}>
+                {/* Related Items */}
+
+                {wishlist.length == 0 ? (
+                  <div></div>
+                ) : (
+                  wishlist.map((item, index) => (
+                    <RelatedItem product={item} key={index} />
+                  ))
+                )}
+              </Slider>
               <Banner />
             </div>
           </div>
@@ -172,104 +122,110 @@ const CartSidebar = () => {
                   {cart.length == 0 ? (
                     <p className="bb-wishlist-msg">Your Cart is empty!</p>
                   ) : (
-                    <Fragment>
-                      {cart.map((item, index) => (
-                        <li key={index} className="cart-sidebar-list">
-                          <button
-                            type="button"
-                            className="cart-remove-item"
-                            onClick={() => removeItem(item.id, item.variant.id)}
-                          >
-                            <i className="ri-close-line"></i>
-                          </button>
-                          <Link href="/product" className="bb-cart-pro-img">
-                            <img
-                              src={item.image}
-                              alt={`product-${item.variant.id}`}
-                            />
+                    cart.map((item, index) => (
+                      <li key={index} className="cart-sidebar-list">
+                        <button
+                          type="button"
+                          className="cart-remove-item"
+                          onClick={() => removeItem(item.id, item.variant.id)}
+                        >
+                          <i className="ri-close-line"></i>
+                        </button>
+                        <Link href="/product" className="bb-cart-pro-img">
+                          <img
+                            src={item.image}
+                            alt={`product-${item.variant.id}`}
+                          />
+                        </Link>
+                        <div className="bb-cart-contact">
+                          <Link href="/product" className="bb-cart-sub-title">
+                            {item.name}
                           </Link>
-                          <div className="bb-cart-contact">
-                            <Link href="/product" className="bb-cart-sub-title">
-                              {item.name}
-                            </Link>
-                            <span className="cart-price">
-                              <span className="new-price">
-                                {formatPrice(item.price)}
-                              </span>
-                              x {item.variant.size}
+                          <span className="cart-price">
+                            <span className="new-price">
+                              {formatPrice(item.price)}
                             </span>
-                            <div className="qty-plus-minus">
-                              <div
-                                className="dec bb-qtybtn"
-                                onClick={() =>
-                                  updateQuantity(
-                                    item.id,
-                                    item.quantity - 1,
-                                    item.variant.id
-                                  )
-                                }
-                              >
-                                -
-                              </div>
-                              <input
-                                className="qty-input"
-                                type="text"
-                                value={item.quantity}
-                                readOnly
-                              />
-                              <div
-                                className="inc bb-qtybtn"
-                                onClick={() =>
-                                  updateQuantity(
-                                    item.id,
-                                    item.quantity + 1,
-                                    item.variant.id
-                                  )
-                                }
-                              >
-                                +
-                              </div>
+                            x {item.variant.size}
+                          </span>
+                          <div className="qty-plus-minus">
+                            <div
+                              className="dec bb-qtybtn"
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  item.quantity - 1,
+                                  item.variant.id
+                                )
+                              }
+                            >
+                              -
+                            </div>
+                            <input
+                              className="qty-input"
+                              type="text"
+                              value={item.quantity}
+                              readOnly
+                            />
+                            <div
+                              className="inc bb-qtybtn"
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  item.quantity + 1,
+                                  item.variant.id
+                                )
+                              }
+                            >
+                              +
                             </div>
                           </div>
-                        </li>
-                      ))}
-                    </Fragment>
+                        </div>
+                      </li>
+                    ))
                   )}
                 </ul>
               </div>
 
-              <div className="bb-bottom-cart">
-                <div className="cart-sub-total">
-                  <table className="table cart-table">
-                    <tbody>
-                      <tr>
-                        <td className="title">Sub-Total :</td>
-                        <td className="price">{formatPrice(subTotal)}</td>
-                      </tr>
-                      <tr>
-                        <td className="title">VAT (20%) :</td>
-                        <td className="price">{formatPrice(vat)}</td>
-                      </tr>
-                      <tr>
-                        <td className="title">Total :</td>
-                        <td className="price">{formatPrice(total)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              {cart.length == 0 ? (
+                <div></div>
+              ) : (
+                <div className="bb-bottom-cart">
+                  <div className="cart-sub-total">
+                    <table className="table cart-table">
+                      <tbody>
+                        <tr>
+                          <td className="title">Sub-Total:</td>
+                          <td className="price">{formatPrice(subTotal)}</td>
+                        </tr>
+                        <tr>
+                          <td className="title">VAT ({valueAddedTax}%):</td>
+                          <td className="price">{formatPrice(vat)}</td>
+                        </tr>
+                        <tr>
+                          <td className="title">Total:</td>
+                          <td className="price">{formatPrice(total)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="cart-btn">
+                    <Link
+                      href="/cart"
+                      className="bb-btn-1"
+                      onClick={toggleCart}
+                    >
+                      <span> View Cart </span>
+                    </Link>
+                    <Link
+                      href={`${settings.langPrefix}/checkout`}
+                      className="bb-btn-2"
+                      onClick={toggleCart}
+                    >
+                      <span> Checkout </span>
+                    </Link>
+                  </div>
                 </div>
-                <div className="cart-btn">
-                  <Link href="/cart" className="bb-btn-1" onClick={toggleCart}>
-                    <span> View Cart </span>
-                  </Link>
-                  <Link
-                    href={`${settings.langPrefix}/checkout`}
-                    className="bb-btn-2"
-                    onClick={toggleCart}
-                  >
-                    <span> Checkout </span>
-                  </Link>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

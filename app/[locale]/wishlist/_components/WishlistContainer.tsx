@@ -1,8 +1,10 @@
 "use client";
 
-import { useWishlist } from "@/context/WishlistContext";
 import { Fragment } from "react";
-import ProductCard from "../../shop/_components/ProductCard";
+
+import WishlistProductCard from "./WishlistProductCard";
+
+import { useWishlist } from "@/context/WishlistContext";
 
 const WishlistContainer = () => {
   const { wishlist: products } = useWishlist();
@@ -17,7 +19,7 @@ const WishlistContainer = () => {
             ) : (
               <Fragment>
                 {products.map((product, index) => (
-                  <ProductCard product={product} index={index} />
+                  <WishlistProductCard key={index} product={product} index={index} />
                 ))}
               </Fragment>
             )}{" "}

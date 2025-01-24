@@ -61,6 +61,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
           min={1}
           max={variantSelected.stock}
           disabled={outOfStock}
+          readOnly
         />
         <div
           className={`inc bb-qtybtn ${outOfStock && "disabled"}`}

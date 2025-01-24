@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import ProductCard from "./ProductCard";
+import ProductCard from "@/components/template/ProductCard";
 import SortSection from "./SortSection";
 import PaginationSection from "./PaginationSection";
 
@@ -40,9 +40,11 @@ const ShopRightSide = () => {
       const { data }: ProductsResponse = await fetcher(
         `api/products?${queryString}`
       );
-      setProducts(data.products);
-      setPagination(data.pagination);
-      setError(null);
+      if (data) {
+        setProducts(data.products);
+        setPagination(data.pagination);
+        setError(null);
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
       setError("Failed to load products, please try again later.");

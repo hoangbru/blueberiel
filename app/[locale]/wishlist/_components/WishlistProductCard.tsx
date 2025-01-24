@@ -1,20 +1,20 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import Link from "next/link";
 
 import RatingStar from "@/components/template/RatingStar";
 import { QuickViewModal } from "@/components/template";
 
-import { Product } from "@/types/product";
-import { useWishlist } from "@/context/WishlistContext";
-import { formatPrice } from "@/utils/format";
 import { useAppSetting } from "@/context/AppContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { Product } from "@/types/product";
+import { formatPrice } from "@/utils/format";
 
-interface ProductCardProps {
+interface WishlistProductCardProps {
   product: Product;
   index: number;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
+const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) => {
   const { wishlist, toggleWishlistItem } = useWishlist();
   const { settings } = useAppSetting();
 
@@ -26,7 +26,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
 
   return (
     <div
-      className="col-md-4 col-6 mb-24 bb-product-box pro-bb-content"
+      className="col-lg-3 col-md-6 col-12 mb-24 bb-wishlist"
       data-aos="fade-up"
       data-aos-duration="1000"
       data-aos-delay={200 * (index + 1)}
@@ -97,4 +97,4 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
   );
 };
 
-export default ProductCard;
+export default WishlistProductCard;

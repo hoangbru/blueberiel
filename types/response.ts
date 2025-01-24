@@ -3,5 +3,5 @@ export interface ResponseApi<T> {
     message: string;
     error?: any;
   };
-  data?: T;
+  data: T | null;
 }

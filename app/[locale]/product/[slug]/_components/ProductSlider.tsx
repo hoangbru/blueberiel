@@ -1,6 +1,5 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Slider, { Settings } from "react-slick";
-
 import { ZoomImage } from "@/components/template";
 
 interface ProductSliderProps {
@@ -8,15 +7,27 @@ interface ProductSliderProps {
 }
 
 const ProductSlider: FC<ProductSliderProps> = ({ images }) => {
+  const [mainSlider, setMainSlider] = useState<Slider | null>(null);
+  const [thumbSlider, setThumbSlider] = useState<Slider | null>(null);
+
   const mainSliderRef = useRef<Slider | null>(null);
   const thumbSliderRef = useRef<Slider | null>(null);
+
+  useEffect(() => {
+    if (mainSliderRef.current) {
+      setMainSlider(mainSliderRef.current);
+    }
+    if (thumbSliderRef.current) {
+      setThumbSlider(thumbSliderRef.current);
+    }
+  }, []);
 
   const mainSliderSettings: Settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
     fade: true,
-    asNavFor: thumbSliderRef.current ?? undefined,
+    asNavFor: thumbSlider as Slider,
   };
 
   const thumbSliderSettings: Settings = {
@@ -25,7 +36,7 @@ const ProductSlider: FC<ProductSliderProps> = ({ images }) => {
     dots: false,
     arrows: true,
     focusOnSelect: true,
-    asNavFor: mainSliderRef.current ?? undefined,
+    asNavFor: mainSlider as Slider,
   };
 
   return (
