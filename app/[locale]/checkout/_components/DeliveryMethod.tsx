@@ -1,3 +1,5 @@
+import { formatPrice } from "@/utils/format";
+
 const DeliveryMethod = () => {
   return (
     <div
@@ -10,29 +12,25 @@ const DeliveryMethod = () => {
         <h4>Delivery Method</h4>
       </div>
       <div className="checkout-method">
-        <span className="details">
-          Please select the preferred shipping method to use on this order.
-        </span>
         <div className="bb-del-option">
           <div className="inner-del">
-            <span className="bb-del-head">Free Shipping</span>
-            <div className="radio-itens">
-              <input type="radio" id="rate1" name="rate" checked />
-              <label htmlFor="rate1">Rate - $0 .00</label>
+            <span className="bb-del-head">Standard</span>
+            <div className="radio-items">
+              <input type="radio" id="rate1" name="rate" />
+              <label htmlFor="rate1">Rate - {formatPrice(0)}</label>
             </div>
           </div>
           <div className="inner-del">
-            <span className="bb-del-head">Flat Rate</span>
-            <div className="radio-itens">
+            <span className="bb-del-head">Express</span>
+            <div className="radio-items">
               <input type="radio" id="rate2" name="rate" />
-              <label htmlFor="rate2">Rate - $5.00</label>
+              <label htmlFor="rate2">Rate - {formatPrice(5)}</label>
             </div>
           </div>
         </div>
-      </div>
-      <div className="about-order">
-        <h5>Add Comments About Your Order</h5>
-        <textarea name="your-commemt" placeholder="Comments"></textarea>
+        <span className="details">
+          Please select the preferred shipping method to use on this order.
+        </span>
       </div>
     </div>
   );

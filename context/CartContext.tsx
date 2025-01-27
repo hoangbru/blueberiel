@@ -18,6 +18,7 @@ export type CartItem = {
   image: string;
   variant: Variant;
   quantity: number;
+  slug: string;
 };
 
 type CartContextType = {
@@ -53,12 +54,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       toast.error(`'${product.name}' is out of stock.`);
       return;
     }
-  
+
     setCart((prevCart) => {
       const index = prevCart.findIndex(
-        (item) => item.id === product.id && item.variant.id === product.variant.id
+        (item) =>
+          item.id === product.id && item.variant.id === product.variant.id
       );
-  
+
       if (index !== -1) {
         const updatedCart = [...prevCart];
         const currentQuantity = updatedCart[index].quantity;
@@ -66,16 +68,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           currentQuantity + product.quantity,
           product.variant.stock
         );
-  
+
         if (newQuantity > currentQuantity) {
           updatedCart[index].quantity = newQuantity;
           toast.success(`'${product.name}' quantity has been updated.`);
         } else {
-          toast.error(
-            `'${product.name}' has reached the maximum stock limit.`
-          );
+          toast.error(`'${product.name}' has reached the maximum stock limit.`);
         }
-  
+
         return updatedCart;
       } else {
         if (product.quantity > product.variant.stock) {
@@ -84,13 +84,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           );
           return [...prevCart, { ...product, quantity: product.variant.stock }];
         }
-  
+
         toast.success(`'${product.name}' has been added to the cart.`);
         return [...prevCart, product];
       }
     });
   };
-  
 
   const removeItem = (id: string | number, variantId?: string | number) => {
     setCart((prevCart) => {

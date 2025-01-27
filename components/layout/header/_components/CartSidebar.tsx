@@ -7,9 +7,9 @@ import RelatedItem from "./RelatedItem";
 
 import { useAppSetting } from "@/context/AppContext";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { valueAddedTax } from "@/constants/value";
 import { formatPrice } from "@/utils/format";
-import { useWishlist } from "@/context/WishlistContext";
 
 const CartSidebar = () => {
   const { settings } = useAppSetting();
@@ -84,21 +84,21 @@ const CartSidebar = () => {
           <div className="col-md-5 col-12 d-none-767">
             <div className="bb-top-contact">
               <div className="bb-cart-title">
-                <h4>Related Items</h4>
+                {wishlist?.length > 0 && <h4>Related Items</h4>}
               </div>
             </div>
             <div className="bb-cart-box mb-minus-24 cart-related bb-border-right">
-              <Slider {...mainSliderSettings}>
-                {/* Related Items */}
+              {/* Related Items */}
 
-                {wishlist.length == 0 ? (
-                  <div></div>
-                ) : (
-                  wishlist.map((item, index) => (
+              {wishlist.length == 0 ? (
+                <div></div>
+              ) : (
+                <Slider {...mainSliderSettings}>
+                  {wishlist.map((item, index) => (
                     <RelatedItem product={item} key={index} />
-                  ))
-                )}
-              </Slider>
+                  ))}
+                </Slider>
+              )}
               <Banner />
             </div>
           </div>
@@ -138,7 +138,10 @@ const CartSidebar = () => {
                           />
                         </Link>
                         <div className="bb-cart-contact">
-                          <Link href="/product" className="bb-cart-sub-title">
+                          <Link
+                            href={`${settings.langPrefix}/product/${item.slug}`}
+                            className="bb-cart-sub-title"
+                          >
                             {item.name}
                           </Link>
                           <span className="cart-price">

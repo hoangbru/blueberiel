@@ -122,10 +122,10 @@ const BottomHeader = () => {
                         </li>
                         <li>
                           <Link
-                            href={`${settings.langPrefix}/checkout`}
+                            href={`${settings.langPrefix}/track-order`}
                             className="dropdown-item"
                           >
-                            Checkout
+                            Track Order
                           </Link>
                         </li>
                         <li>

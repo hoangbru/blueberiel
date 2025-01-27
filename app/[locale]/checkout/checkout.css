@@ -42,10 +42,11 @@
   font-weight: 500;
   color: #686e7d;
 }
-.bb-checkout-sidebar .checkout-summary ul li span .apply {
+.bb-checkout-sidebar .checkout-summary ul li span.apply {
   font-size: 14px;
   font-weight: 500;
   color: #ff0000;
+  cursor: pointer;
 }
 .bb-checkout-sidebar .bb-checkout-pro {
   margin-bottom: -24px;
@@ -123,19 +124,30 @@
   .bb-pro-variation {
   margin: 0;
 }
-.bb-checkout-sidebar .checkout-method {
-  margin-bottom: 24px;
-}
 .bb-checkout-sidebar .checkout-method span.details {
   font-size: 15px;
   font-weight: 500;
   color: #686e7d;
 }
 .bb-checkout-sidebar .checkout-method .inner-del {
-  width: 50%;
+  width: 100%;
+}
+.bb-checkout-sidebar .checkout-method .inner-del .radio-items {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bb-checkout-sidebar .checkout-method .inner-del .radio-items span {
+  width: 40px;
+  height: 16px;
+  position: relative;
+}
+.bb-checkout-sidebar .checkout-method .inner-del .radio-items span img {
+  object-fit: cover;
 }
 .bb-checkout-sidebar .checkout-method .bb-del-option {
-  margin-top: 12px;
+  margin: 12px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -192,6 +204,7 @@
   border: 1px solid #eee;
   padding: 20px;
   border-radius: 20px;
+  margin-bottom: 24px;
 }
 .bb-checkout-contact .main-title {
   margin-bottom: 20px;
@@ -213,20 +226,20 @@
   display: flex;
   margin-bottom: 10px;
 }
-.bb-checkout-contact .checkout-radio .radio-itens:not(:last-child) {
+.bb-checkout-contact .checkout-radio .radio-items:not(:last-child) {
   margin-right: 20px;
 }
-.bb-checkout-contact .checkout-radio .radio-itens input {
+.bb-checkout-contact .checkout-radio .radio-items input {
   width: auto;
   margin-right: 2px;
 }
-.bb-checkout-contact .checkout-radio .radio-itens label {
+.bb-checkout-contact .checkout-radio .radio-items label {
   font-size: 14px;
   font-weight: 400;
   color: #686e7d;
 }
 .bb-checkout-contact p {
-  margin-bottom: 16px;
+  margin-bottom: 0;
   font-size: 14px;
   font-weight: 300;
   color: #686e7d;

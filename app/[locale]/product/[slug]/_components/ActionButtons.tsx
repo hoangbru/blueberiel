@@ -38,6 +38,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
       variant: variantSelected,
       image: product.images[0],
       quantity,
+      slug: product.slug
     });
   };
 

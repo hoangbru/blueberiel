@@ -8,6 +8,7 @@ import { CartProvider } from "@/context/CartContext";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { QueryProvider } from "@/context/QueryContext";
 import { WishlistProvider } from "@/context/WishlistContext";
+import { CheckoutProvider } from "@/context/CheckoutContext";
 
 const AppProviders = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
@@ -17,11 +18,13 @@ const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
     <AppSettingProvider>
       <CartProvider>
-        <WishlistProvider>
-          <QueryProvider>
-            <LoadingProvider>{children}</LoadingProvider>
-          </QueryProvider>
-        </WishlistProvider>
+        <CheckoutProvider>
+          <WishlistProvider>
+            <QueryProvider>
+              <LoadingProvider>{children}</LoadingProvider>
+            </QueryProvider>
+          </WishlistProvider>
+        </CheckoutProvider>
       </CartProvider>
     </AppSettingProvider>
   );

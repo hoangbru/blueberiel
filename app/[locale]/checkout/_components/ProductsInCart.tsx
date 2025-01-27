@@ -14,66 +14,43 @@ const ProductsInCart = () => {
 
   return (
     <div className="bb-checkout-pro">
-      {products.length
-        ? products.map((product, index) => {
-            return (
-              <div className="pro-items" key={index}>
-                <div className="image">
-                  <img src={product.image} alt={product.slug} />
+      {products.length ? (
+        products.map((item, index) => {
+          return (
+            <div className="pro-items" key={index}>
+              <div className="image">
+                <Link href={`${settings.langPrefix}/product/${item.slug}`}>
+                  <img src={item.image} alt={`product-${item.variant.id}`} />
+                </Link>
+              </div>
+              <div className="items-contact">
+                <h4>
+                  <Link href={`${settings.langPrefix}/product/${item.slug}`}>
+                    {item.name}
+                  </Link>
+                </h4>
+
+                <div className="inner-price">
+                  <span className="new-price">{formatPrice(item.price)}</span>
+                  <span className="old-price">{formatPrice(item.price)}</span>
                 </div>
-                <div className="items-contact">
-                  <h4>
-                    <Link
-                      href={`${settings.langPrefix}/product/${product.slug}`}
-                    >
-                      {product.name}
-                    </Link>
-                  </h4>
-                  <RatingStar rating={product.rating} />
-                  <div className="inner-price">
-                    <span className="new-price">
-                      {formatPrice(product.price)}
-                    </span>
-                    <span className="old-price">
-                      {formatPrice(product.price)}
-                    </span>
-                  </div>
-                  <div className="bb-pro-variation">
-                    <ul>
-                      <li className="active">
-                        <a
-                          href="javascript:void(0)"
-                          className="bb-opt-sz"
-                          data-tooltip="Small"
-                        >
-                          250g
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="javascript:void(0)"
-                          className="bb-opt-sz"
-                          data-tooltip="Medium"
-                        >
-                          500g
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="javascript:void(0)"
-                          className="bb-opt-sz"
-                          data-tooltip="Large"
-                        >
-                          1kg
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="bb-pro-variation">
+                  <ul>
+                    <li>
+                      <span>x{item.quantity}</span>
+                    </li>
+                    <li className="active">
+                      <span>{item.variant.size}</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            );
-          })
-        : "No product in cart."}
+            </div>
+          );
+        })
+      ) : (
+        <p style={{ paddingBottom: "5px" }}>No product in cart.</p>
+      )}
     </div>
   );
 };
