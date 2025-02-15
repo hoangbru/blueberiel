@@ -29,7 +29,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
     if (settings.langPrefix !== langPrefix) {
       setSettingsState((prev) => ({
         ...prev,
-        langPrefix,
+        langPrefix,  
       }));
     }
   }, [langPrefix, settings.langPrefix]);

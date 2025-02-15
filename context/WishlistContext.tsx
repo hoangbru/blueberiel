@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/types/product";
 import {
   createContext,
   useContext,
@@ -9,6 +8,8 @@ import {
   ReactNode,
 } from "react";
 import toast from "react-hot-toast";
+
+import { Product } from "@/types/product";
 
 type WishlistContextType = {
   wishlist: Product[];
@@ -31,7 +32,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    localStorage.setItem("bbr-wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
   const toggleWishlistItem = (product: Product) => {

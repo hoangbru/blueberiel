@@ -1,7 +1,7 @@
-export interface ResponseApi<T> {
+export interface ResponseApi<T = undefined> {
   meta: {
     message: string;
-    error?: any;
+    errors?: unknown;
   };
-  data: T | null;
+  data?: T | null;
 }

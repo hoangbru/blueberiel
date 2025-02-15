@@ -1,43 +1,47 @@
 "use client";
 
-import { useState, useEffect, MouseEvent } from "react";
+import { Fragment } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import toast from "react-hot-toast";
 
 import { IconGridSquare, IconStar, IconUser } from "@/components/icons";
 import CartSidebar from "@/components/layout/header/_components/CartSidebar";
+import { CustomSelect } from "@/components/template";
 import MobileHeader from "./MobileHeader";
 
 import { useAppSetting } from "@/context/AppContext";
 import { useWishlist } from "@/context/WishlistContext";
+import api from "@/libs/axios";
+import { ResponseApi } from "@/types/response";
+import { categories } from "@/data/categories";
+import { useUser } from "@/context/UserContext";
 
 const BottomHeader = () => {
   const { settings } = useAppSetting();
   const { wishlist } = useWishlist();
-  const options = ["vegetables", "Cold Drinks", "Fruits", "Bakery"];
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const { profile } = useUser();
 
-  const toggleDropdown = (event: MouseEvent) => {
-    event.stopPropagation();
-    setIsOpen(!isOpen);
-    document.addEventListener("click", closeDropdown);
+  const handleCategoryChange = (value: string) => {
+    console.log("Selected city:", value);
   };
 
-  const closeDropdown = () => {
-    setIsOpen(false);
-    document.removeEventListener("click", closeDropdown);
-  };
+  const logout = async () => {
+    try {
+      const { meta }: ResponseApi = await api.post("/api/logout");
+console.log(meta)
+      toast.success(`${meta.message}`);
+      localStorage.removeItem("_bbr_tk");
 
-  const selectOption = (option: string) => {
-    setSelectedOption(option);
-    setIsOpen(false);
+      router.push(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/${settings.langPrefix}/login`
+      );
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
-
-  useEffect(() => {
-    return () => {
-      document.removeEventListener("click", closeDropdown);
-    };
-  }, []);
 
   return (
     <div className="bottom-header">
@@ -49,15 +53,19 @@ const BottomHeader = () => {
                 {/* Header Logo Start */}
                 <div className="header-logo">
                   <Link href={`${settings.langPrefix}/`}>
-                    <img
+                    <Image
                       src="/assets/img/logo/logo.png"
-                      alt="logo"
                       className="light"
-                    />
-                    <img
-                      src="/assets/img/logo/logo-dark.png"
                       alt="logo"
+                      width={125}
+                      height={43}
+                    />
+                    <Image
+                      src="/assets/img/logo/logo-dark.png"
                       className="dark"
+                      alt="logo"
+                      width={125}
+                      height={43}
                     />
                   </Link>
                 </div>
@@ -69,20 +77,11 @@ const BottomHeader = () => {
               <div className="cols">
                 <div className="header-search">
                   <form className="bb-btn-group-form" action="#">
-                    <div className="inner-select" onClick={toggleDropdown}>
-                      <div className="custom-select">{selectedOption}</div>
-                      {isOpen && (
-                        <ul className="select-options">
-                          {options.map((option, index) => (
-                            <li
-                              key={index}
-                              onClick={() => selectOption(option)}
-                            >
-                              {option}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    <div className="inner-select">
+                      <CustomSelect
+                        options={categories}
+                        onChange={handleCategoryChange}
+                      />
                     </div>
                     <input
                       className="form-control bb-search-bar"
@@ -108,34 +107,53 @@ const BottomHeader = () => {
                         </div>
                         <div className="bb-btn-desc">
                           <span className="bb-btn-title">Account</span>
-                          <span className="bb-btn-stitle">Login</span>
+                          <span className="bb-btn-stitle">
+                            {profile?.email}
+                          </span>
                         </div>
                       </div>
                       <ul className="bb-dropdown-menu">
-                        <li>
-                          <Link
-                            href={`${settings.langPrefix}/register`}
-                            className="dropdown-item"
-                          >
-                            Register
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href={`${settings.langPrefix}/track-order`}
-                            className="dropdown-item"
-                          >
-                            Track Order
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href={`${settings.langPrefix}/login`}
-                            className="dropdown-item"
-                          >
-                            Login
-                          </Link>
-                        </li>
+                        {!profile && (
+                          <Fragment>
+                            <li>
+                              <Link
+                                href={`${settings.langPrefix}/register`}
+                                className="dropdown-item"
+                              >
+                                Register
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                href={`${settings.langPrefix}/login`}
+                                className="dropdown-item"
+                              >
+                                Login
+                              </Link>
+                            </li>
+                          </Fragment>
+                        )}
+                        {profile?.role === "user" && (
+                          <Fragment>
+                            <li>
+                              <Link
+                                href={`${settings.langPrefix}/track-order`}
+                                className="dropdown-item"
+                              >
+                                Track Order
+                              </Link>
+                            </li>
+                            <li>
+                              <div
+                                style={{ cursor: "pointer" }}
+                                className="dropdown-item"
+                                onClick={logout}
+                              >
+                                Logout
+                              </div>
+                            </li>
+                          </Fragment>
+                        )}
                       </ul>
                     </div>
                     <Link

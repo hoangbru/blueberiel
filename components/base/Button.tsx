@@ -1,30 +1,25 @@
-import { ButtonHTMLAttributes } from "react";
+import { forwardRef, ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick?: () => void;
+  disabled?: boolean;
   children: React.ReactNode;
-  loading: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({
-  type = "button",
-  onClick,
-  disabled = false,
-  children,
-  className = "",
-}) => {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`px-4 py-2 bg-blue-500 text-white rounded ${
-        disabled ? "opacity-50" : "hover:bg-blue-600"
-      } ${className}`}
-    >
-      {children}
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ disabled, children, className = "", ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={`bb-btn-2 ${className}`}
+        aria-disabled={disabled}
+        {...props}
+      >
+        {disabled ? "Loading..." : children}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
 
 export default Button;

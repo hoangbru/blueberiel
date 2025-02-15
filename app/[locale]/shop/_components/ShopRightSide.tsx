@@ -38,7 +38,7 @@ const ShopRightSide = () => {
     const queryString = new URLSearchParams(queryParams).toString();
     try {
       const { data }: ProductsResponse = await fetcher(
-        `api/products?${queryString}`
+        `/api/products?${queryString}`
       );
       if (data) {
         setProducts(data.products);

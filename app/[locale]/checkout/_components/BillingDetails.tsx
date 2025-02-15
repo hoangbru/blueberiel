@@ -1,6 +1,6 @@
 import { FormEvent, Fragment, useState } from "react";
 
-import { InputBase } from "@/components/base";
+import { Input } from "@/components/base";
 import { CustomSelect } from "@/components/template";
 import { cities, countries, regions } from "@/data/country";
 
@@ -106,7 +106,7 @@ const BillingDetails = () => {
       </div>
       <div className="checkout-radio">
         <div className="radio-items">
-          <InputBase
+          <Input
             type="radio"
             id="existingAddress"
             name="address"
@@ -116,7 +116,7 @@ const BillingDetails = () => {
           <label htmlFor="existingAddress">Use an existing address</label>
         </div>
         <div className="radio-items">
-          <InputBase
+          <Input
             type="radio"
             id="newAddress"
             name="address"

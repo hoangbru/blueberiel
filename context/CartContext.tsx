@@ -7,9 +7,9 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import toast from "react-hot-toast";
 
 import { Variant } from "@/types/product";
-import toast from "react-hot-toast";
 
 export type CartItem = {
   id: string | number;
@@ -46,7 +46,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("bbr-cart", JSON.stringify(cart));
   }, [cart]);
 
   const addItem = (product: CartItem) => {

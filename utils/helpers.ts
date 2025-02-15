@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { Product } from "@/types/product";
 
 export const getURL = () => {
@@ -37,11 +36,7 @@ export const postData = async ({
 };
 
 export const toDateTime = (secs: number) => {
-  var t = new Date("1970-01-01T00:30:00Z"); // Unix epoch start.
+  const t = new Date("1970-01-01T00:30:00Z"); // Unix epoch start.
   t.setSeconds(secs);
   return t;
-};
-
-export const generateUniqueId = (): string => {
-  return uuidv4();
 };

@@ -31,7 +31,7 @@ const ProductContainer = ({ slug }: ProductContainerProps) => {
   const fetchProduct = async (slug: string) => {
     showLoader();
     try {
-      const { data }: ProductResponse = await fetcher(`api/product/${slug}`);
+      const { data }: ProductResponse = await fetcher(`/api/product/${slug}`);
       setProduct(data.product);
       setError(null);
     } catch (error) {

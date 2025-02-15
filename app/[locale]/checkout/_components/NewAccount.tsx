@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 
-import { InputBase } from "@/components/base";
+import { Input } from "@/components/base";
 import { useAppSetting } from "@/context/AppContext";
 
 const NewAccount = () => {
@@ -23,7 +23,7 @@ const NewAccount = () => {
       </div>
       <div className="checkout-radio">
         <div className="radio-items">
-          <InputBase
+          <Input
             type="radio"
             id="existingAccount"
             name="account"
@@ -33,7 +33,7 @@ const NewAccount = () => {
           <label htmlFor="existingAccount">Register Account</label>
         </div>
         <div className="radio-items">
-          <InputBase
+          <Input
             type="radio"
             id="newAccount"
             name="account"

@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 
-import RatingStar from "@/components/template/RatingStar";
-
 import { useCart } from "@/context/CartContext";
 import { useAppSetting } from "@/context/AppContext";
 import { formatPrice } from "@/utils/format";

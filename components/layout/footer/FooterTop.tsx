@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useAppSetting } from "@/context/AppContext";
+import Image from "next/image";
 
 const FooterTop = () => {
   const { settings } = useAppSetting();
@@ -26,15 +27,19 @@ const FooterTop = () => {
           {/* Company Section */}
           <div className="col-sm-12 col-lg-4 bb-footer-cat">
             <div className="bb-footer-widget bb-footer-company">
-              <img
+              <Image
                 src="/assets/img/logo/logo.png"
                 className="bb-footer-logo"
                 alt="footer logo"
+                width={144}
+                height={50}
               />
-              <img
+              <Image
                 src="/assets/img/logo/logo-dark.png"
                 className="bb-footer-dark-logo"
                 alt="footer logo"
+                width={144}
+                height={50}
               />
               <p className="bb-footer-detail">
                 Blueberiel is the biggest market of grocery products. Get your
@@ -42,17 +47,21 @@ const FooterTop = () => {
               </p>
               <div className="bb-app-store">
                 <Link href="#" className="app-img">
-                  <img
+                  <Image
                     src="/assets/img/app/android.png"
                     className="adroid"
                     alt="apple"
+                    width={120}
+                    height={36}
                   />
                 </Link>
                 <Link href="#" className="app-img">
-                  <img
+                  <Image
                     src="/assets/img/app/apple.png"
                     className="apple"
                     alt="apple"
+                    width={120}
+                    height={36}
                   />
                 </Link>
               </div>

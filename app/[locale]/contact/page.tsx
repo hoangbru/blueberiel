@@ -8,7 +8,7 @@ import styles from "./contact.module.css";
 
 import { emailPattern } from "@/constants/pattern";
 import { debounce } from "@/utils/debounce";
-import { InputBase, TextareaBase } from "@/components/base";
+import { Input, TextareaBase } from "@/components/base";
 
 export default function Contact() {
   const t = useTranslations();

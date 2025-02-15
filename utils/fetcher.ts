@@ -1,6 +1,21 @@
-export const fetcher = async (path: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`);
-  const data = await res.json();
+import api from "@/libs/axios";
 
-  return data;
+export const fetcher = async (path: string) => {
+  const response = await api.get(path);
+  return response.data;
+};
+
+export const mutation = async (
+  path: string,
+  data: Record<string, unknown> = {},
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "POST"
+) => {
+  const config = {
+    url: path,
+    method,
+    ...(method !== "GET" && { data }),
+  };
+
+  const response = await api(config);
+  return response.data;
 };

@@ -20,6 +20,7 @@ import { PreLoader } from "@/components/template";
 
 import { routing } from "@/i18n/routing";
 import AppProviders from "@/providers/AppProviders";
+import { ReactNode } from "react";
 
 const fontRegular = Poppins({
   subsets: ["latin"],
@@ -28,10 +29,12 @@ const fontRegular = Poppins({
 });
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: {
-  params: { locale: never };
+  params: { locale: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
+  const { locale } = resolvedParams;
   const t = await getTranslations({ locale, namespace: "Metadata" });
   return {
     title: t("title"),
@@ -47,11 +50,13 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: { locale: string };
 }) {
+  const resolvedParams = await Promise.resolve(params);
+  const { locale } = resolvedParams;
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as never)) {
     notFound();

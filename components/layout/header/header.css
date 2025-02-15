@@ -1028,7 +1028,7 @@
   font-size: 15px;
   font-weight: 500;
 }
-.bb-mobile-menu .bb-menu-inner .bb-menu-content ul li a:last-child() {
+.bb-mobile-menu .bb-menu-inner .bb-menu-content ul li a:last-child {
   margin-bottom: 0;
 }
 .bb-mobile-menu .bb-menu-inner .bb-menu-content ul li .menu-toggle {

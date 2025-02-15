@@ -1,7 +1,7 @@
 import { ElementRef, FormEvent, useRef, useState } from "react";
 
 import ProductsInCart from "./ProductsInCart";
-import { InputBase } from "@/components/base";
+import { Input } from "@/components/base";
 
 import { useCart } from "@/context/CartContext";
 import { deliveryCharge } from "@/constants/value";
@@ -53,9 +53,10 @@ const SummarrySection = () => {
         setIsLoading(false);
       }
     };
+    
     return (
       <form onSubmit={onSubmit}>
-        <InputBase
+        <Input
           id="coupon-code"
           ref={inputRef}
           className="bb-coupon"
