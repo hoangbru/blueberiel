@@ -2,6 +2,7 @@
 
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
 import {
@@ -9,19 +10,17 @@ import {
   Input,
   Label,
   FieldError,
-  LinkPrefix,
 } from "@/components/base";
 
-import { useAppSetting } from "@/context/AppContext";
 import { useLoading } from "@/context/LoadingContext";
 import { loginSchema } from "@/schemas/auth";
 import { AuthState } from "@/types/auth";
 import { mutation } from "@/utils/fetcher";
 import { ResponseApi } from "@/types/response";
 
+
 const LoginForm = () => {
   const router = useRouter();
-  const { settings } = useAppSetting();
   const { showLoader, hideLoader, loading } = useLoading();
 
   const [errors, setErrors] = useState<AuthState>({
@@ -73,7 +72,7 @@ const LoginForm = () => {
       formRef.current?.reset();
       toast.success(apiResponse.meta.message);
       router.push(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${settings.langPrefix}/`
+        `${process.env.NEXT_PUBLIC_BASE_URL}//`
       );
     } catch (error) {
       console.error("Login failed:", error);
@@ -105,7 +104,7 @@ const LoginForm = () => {
       </div>
       <div className="bb-login-button">
         <Button disabled={loading}>Login</Button>
-        <LinkPrefix path="register">Register</LinkPrefix>
+        <Link href="register">Register</Link>
       </div>
     </form>
   );

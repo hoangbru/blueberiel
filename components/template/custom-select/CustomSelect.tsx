@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, RefObject } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
 const CustomSelect = ({
@@ -12,7 +12,7 @@ const CustomSelect = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string>("");
-  const selectRef = useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement | null>(null);
 
   const handleSelect = (value: string) => {
     setSelected(value);
@@ -24,7 +24,7 @@ const CustomSelect = ({
     setIsOpen(false);
   };
 
-  useOnClickOutside(selectRef, handleClickOutside);
+  useOnClickOutside(selectRef as RefObject<HTMLElement>, handleClickOutside);
 
   return (
     <div className="custom-select">

@@ -1,23 +1,12 @@
 "use client";
 
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 
 import BannerSection from "./BannerSection";
 import ShopLeftSide from "./ShopLeftSide";
 import ShopRightSide from "./ShopRightSide";
 
-import { useLoading } from "@/context/LoadingContext";
-
 const ShopContainer = () => {
-  const { showLoader, hideLoader } = useLoading();
-
-  useEffect(() => {
-    showLoader();
-    setTimeout(() => {
-      hideLoader();
-    }, 600);
-  }, []);
-
   return (
     <Fragment>
       <BannerSection />

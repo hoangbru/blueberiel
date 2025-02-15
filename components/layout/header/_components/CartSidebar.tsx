@@ -1,18 +1,16 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import Slider, { Settings } from "react-slick";
 
 import { IconCart } from "@/components/icons";
 import RelatedItem from "./RelatedItem";
 
-import { useAppSetting } from "@/context/AppContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { valueAddedTax } from "@/constants/value";
 import { formatPrice } from "@/utils/format";
 
 const CartSidebar = () => {
-  const { settings } = useAppSetting();
   const { wishlist } = useWishlist();
   const { cart, removeItem, updateQuantity } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -44,7 +42,7 @@ const CartSidebar = () => {
           <div className="detail">
             <h4>Organic & Fresh</h4>
             <h3>Vegetables</h3>
-            <Link href={`${settings.langPrefix}/shop`} onClick={toggleCart}>
+            <Link href={`/shop`} onClick={toggleCart}>
               Buy Now
             </Link>
           </div>
@@ -139,7 +137,7 @@ const CartSidebar = () => {
                         </Link>
                         <div className="bb-cart-contact">
                           <Link
-                            href={`${settings.langPrefix}/product/${item.slug}`}
+                            href={`/product/${item.slug}`}
                             className="bb-cart-sub-title"
                           >
                             {item.name}
@@ -220,7 +218,7 @@ const CartSidebar = () => {
                       <span> View Cart </span>
                     </Link>
                     <Link
-                      href={`${settings.langPrefix}/checkout`}
+                      href={`/checkout`}
                       className="bb-btn-2"
                       onClick={toggleCart}
                     >

@@ -17,17 +17,18 @@ const CategorySelect = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const { query, setQuery } = useQuery();
 
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const { data }: CategoriesResponse = await fetcher("/api/categories");
-        if (data) setCategories(data.categories);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      } finally {
-        setIsLoadingFetching(false);
-      }
+  const fetchCategories = async () => {
+    try {
+      const { data }: CategoriesResponse = await fetcher("/api/categories");
+      if (data) setCategories(data.categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setIsLoadingFetching(false);
     }
+  };
+  
+  useEffect(() => {
     fetchCategories();
   }, []);
 

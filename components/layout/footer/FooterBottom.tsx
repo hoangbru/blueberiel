@@ -3,10 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import { useAppSetting } from "@/context/AppContext";
-
 const FooterBottom = () => {
-  const { settings } = useAppSetting();
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
   );
@@ -24,7 +21,7 @@ const FooterBottom = () => {
               <div className="footer-bottom-copy">
                 <div className="bb-copy">
                   Copyright © {currentYear}
-                  <Link className="site-name" href={`${settings.langPrefix}/`}>
+                  <Link className="site-name" href={`/`}>
                     Blueberiel
                   </Link>{" "}
                   all rights reserved.

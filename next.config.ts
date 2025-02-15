@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["localhost", "your-domain.com"],
+    domains: ["localhost"],
   },
 };
 

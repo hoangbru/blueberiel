@@ -6,15 +6,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Attach Access Token to every request
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("_bbr_tk");
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
-});
-
 // Interceptor to handle token expiration
 api.interceptors.response.use(
   (response) => response,
@@ -45,7 +36,7 @@ api.interceptors.response.use(
       } catch {
         console.error("Session expired. Redirecting to login...");
         localStorage.removeItem("_bbr_tk");
-        // window.location.href = "/login"; // Redirect to login page
+        // window.location.href = "/login";
       }
     }
     return Promise.reject(error);

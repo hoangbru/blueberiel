@@ -64,6 +64,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^19
     version: 19.0.0
+  '@types/react-slick':
+    specifier: ^0.23.13
+    version: 0.23.13
   eslint:
     specifier: ^9
     version: 9.0.0
@@ -520,6 +523,12 @@ packages:
 
   /@types/react-dom@19.0.0:
     resolution: {integrity: sha512-1KfiQKsH1o00p9m5ag12axHQSb3FOU9H20UTrujVSkNhuCrRHiQWFqgEnTNK5ZNfnzZv8UWrnXVqCmCF9fgY3w==}
+    dependencies:
+      '@types/react': 19.0.0
+    dev: true
+
+  /@types/react-slick@0.23.13:
+    resolution: {integrity: sha512-bNZfDhe/L8t5OQzIyhrRhBr/61pfBcWaYJoq6UDqFtv5LMwfg4NsVDD2J8N01JqdAdxLjOt66OZEp6PX+dGs/A==}
     dependencies:
       '@types/react': 19.0.0
     dev: true

@@ -4,7 +4,6 @@ import Link from "next/link";
 import RatingStar from "@/components/template/RatingStar";
 import { QuickViewModal } from "@/components/template";
 
-import { useAppSetting } from "@/context/AppContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { Product } from "@/types/product";
 import { formatPrice } from "@/utils/format";
@@ -16,7 +15,7 @@ interface WishlistProductCardProps {
 
 const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) => {
   const { wishlist, toggleWishlistItem } = useWishlist();
-  const { settings } = useAppSetting();
+  
 
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
@@ -36,7 +35,7 @@ const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) =
           <span className="flags">
             <span>New</span>
           </span>
-          <Link href={`${settings.langPrefix}/product/${product.slug}`}>
+          <Link href={`/product/${product.slug}`}>
             <div className="inner-img">
               <img
                 className="main-img"
@@ -72,7 +71,7 @@ const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) =
             <RatingStar rating={product.rating} />
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`${settings.langPrefix}/product/${product.slug}`}>
+            <Link href={`/product/${product.slug}`}>
               {product.name}
             </Link>
           </h4>

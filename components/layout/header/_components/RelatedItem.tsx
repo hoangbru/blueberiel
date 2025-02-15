@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Product } from "@/types/product";
-import { useAppSetting } from "@/context/AppContext";
 import RatingStar from "@/components/template/RatingStar";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatPrice } from "@/utils/format";
@@ -9,7 +8,6 @@ import { formatPrice } from "@/utils/format";
 type RelatedItemProps = { product: Product };
 
 const RelatedItem = ({ product }: RelatedItemProps) => {
-  const { settings } = useAppSetting();
   const { wishlist } = useWishlist();
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
@@ -20,7 +18,7 @@ const RelatedItem = ({ product }: RelatedItemProps) => {
           <span className="flags">
             <span>Hot</span>
           </span>
-          <Link href={`${settings.langPrefix}/product/${product.slug}`}>
+          <Link href={`/product/${product.slug}`}>
             <div className="inner-img">
               <img
                 className="main-img"
@@ -55,9 +53,7 @@ const RelatedItem = ({ product }: RelatedItemProps) => {
             <RatingStar rating={product.rating} />
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`${settings.langPrefix}/product/${product.slug}`}>
-              {product.name}
-            </Link>
+            <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h4>
           <div className="bb-price">
             <div className="inner-price">

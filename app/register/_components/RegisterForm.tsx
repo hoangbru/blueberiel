@@ -2,17 +2,11 @@
 
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
-import {
-  Button,
-  Input,
-  Label,
-  FieldError,
-  LinkPrefix,
-} from "@/components/base";
+import { Button, Input, Label, FieldError } from "@/components/base";
 
-import { useAppSetting } from "@/context/AppContext";
 import { useLoading } from "@/context/LoadingContext";
 import { mutation } from "@/utils/fetcher";
 import { registerSchema } from "@/schemas/auth";
@@ -20,7 +14,7 @@ import { AuthState } from "@/types/auth";
 
 const RegisterForm = () => {
   const router = useRouter();
-  const { settings } = useAppSetting();
+
   const { showLoader, hideLoader, loading } = useLoading();
 
   const [errors, setErrors] = useState<AuthState>({
@@ -53,7 +47,11 @@ const RegisterForm = () => {
 
     showLoader();
     try {
-      const apiResponse = await mutation("/api/register", validatedFields.data, "POST");
+      const apiResponse = await mutation(
+        "/api/register",
+        validatedFields.data,
+        "POST"
+      );
       clearErrors();
 
       if (apiResponse.meta.errors) {
@@ -61,9 +59,7 @@ const RegisterForm = () => {
       } else {
         formRef.current?.reset();
         toast.success(apiResponse.meta.message);
-        router.push(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/${settings.langPrefix}/login`
-        );
+        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}//login`);
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -92,7 +88,7 @@ const RegisterForm = () => {
       </div>
       <div className="bb-register-button">
         <Button disabled={loading}>Register</Button>
-        <LinkPrefix path="login">Login</LinkPrefix>
+        <Link href="login">Login</Link>
       </div>
     </form>
   );

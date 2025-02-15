@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, RefObject } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useOnClickOutside } from "usehooks-ts";
 
 const HeaderTop = () => {
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [currencyDropdown, setCurrencyDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -20,7 +20,10 @@ const HeaderTop = () => {
     setLanguageDropdown(false);
   };
 
-  useOnClickOutside(dropdownRef, () => setLanguageDropdown(false));
+  useOnClickOutside(dropdownRef as RefObject<HTMLElement>, () =>
+    setLanguageDropdown(false)
+  );
+
   return (
     <div className="top-header">
       <div className="container">

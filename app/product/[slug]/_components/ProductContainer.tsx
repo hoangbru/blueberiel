@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 import ProductAccordion from "./ProductAccordion";
 import ProductSlider from "./ProductSlider";
@@ -23,16 +23,12 @@ const ProductContainer = ({ slug }: ProductContainerProps) => {
   const { showLoader, hideLoader } = useLoading();
   const [error, setError] = useState<string | null>(null);
   const [product, setProduct] = useState<Product | undefined>(undefined);
-  
-  useEffect(() => {
-    fetchProduct(slug);
-  }, [slug]);
 
-  const fetchProduct = async (slug: string) => {
+  const fetchProduct = useCallback(async () => {
     showLoader();
     try {
       const { data }: ProductResponse = await fetcher(`/api/product/${slug}`);
-      setProduct(data.product);
+      setProduct(data?.product);
       setError(null);
     } catch (error) {
       console.error("Error fetching product:", error);
@@ -40,7 +36,11 @@ const ProductContainer = ({ slug }: ProductContainerProps) => {
     } finally {
       hideLoader();
     }
-  };
+  }, [hideLoader, showLoader, slug]);
+
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
 
   return (
     <Fragment>

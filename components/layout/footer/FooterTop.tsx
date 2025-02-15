@@ -1,13 +1,9 @@
 "use client";
 
 import Link from "next/link";
-
-import { useAppSetting } from "@/context/AppContext";
 import Image from "next/image";
 
 const FooterTop = () => {
-  const { settings } = useAppSetting();
-
   const footerNavItems = [
     { href: "/about", label: "About Us" },
     { href: "/track-order", label: "Delivery" },
@@ -76,9 +72,7 @@ const FooterTop = () => {
                 <ul className="align-items-center">
                   {footerNavItems.map((item, index) => (
                     <li className="bb-footer-link" key={index}>
-                      <Link href={`${settings.langPrefix}${item.href}`}>
-                        {item.label}
-                      </Link>
+                      <Link href={`${item.href}`}>{item.label}</Link>
                     </li>
                   ))}
                 </ul>

@@ -3,11 +3,8 @@
 import { Fragment, useState } from "react";
 import Link from "next/link";
 
-import { useAppSetting } from "@/context/AppContext";
-
 const MobileHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { settings } = useAppSetting();
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -55,9 +52,7 @@ const MobileHeader = () => {
             <ul>
               {navItems.map((item, index) => (
                 <li key={index} onClick={() => setMenuOpen(false)}>
-                  <Link href={`${settings.langPrefix}${item.href}`}>
-                    {item.label}
-                  </Link>
+                  <Link href={`${item.href}`}>{item.label}</Link>
                 </li>
               ))}
             </ul>

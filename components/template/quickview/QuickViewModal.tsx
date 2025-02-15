@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, Fragment, useRef, useState } from "react";
+import { FC, Fragment, RefObject, useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import "./quickview.css";
 
@@ -24,7 +24,7 @@ const QuickViewModal: FC<QuickViewModalProps> = ({ product }) => {
     setIsOpen(!isOpen);
   };
 
-  useOnClickOutside(modalRef, handleToggleModal);
+  useOnClickOutside(modalRef as RefObject<HTMLElement>, handleToggleModal);
 
   return (
     <Fragment>

@@ -2,15 +2,14 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 
 import { Input } from "@/components/base";
-import { useAppSetting } from "@/context/AppContext";
 
 const NewAccount = () => {
-  const { settings } = useAppSetting();
   const [isNewAccount, setIsNewAccount] = useState<boolean>(false);
 
   const handleAccountChange = (e: FormEvent<HTMLInputElement>) => {
     setIsNewAccount(e.currentTarget.checked);
   };
+  
   return (
     <div
       className="bb-checkout-contact"
@@ -45,12 +44,12 @@ const NewAccount = () => {
       </div>
       <p>
         By creating an account you will be able to shop faster, be up to date on
-        an order's status, and keep track of the orders you have previously
+        an order&apos;s status, and keep track of the orders you have previously
         made.
       </p>
       {isNewAccount && (
         <div className="input-button" style={{ margin: "16px 0 0" }}>
-          <Link href={`${settings.langPrefix}/register`} className="bb-btn-2">
+          <Link href={`/register`} className="bb-btn-2">
             Register
           </Link>
         </div>

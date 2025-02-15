@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const AboutContent = () => {
@@ -7,7 +8,12 @@ const AboutContent = () => {
         <div className="row mb-minus-24">
           <div className="col-lg-6 col-12 mb-24">
             <div className="bb-about-img">
-              <img src="/assets/img/about/one.png" alt="about-one" />
+              <Image
+                src="/assets/img/about/one.png"
+                alt="about-one"
+                width={553}
+                height={455}
+              />
             </div>
           </div>
           <div className="col-lg-6 col-12 mb-24">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import ProductCard from "@/components/template/ProductCard";
 import SortSection from "./SortSection";
@@ -28,14 +28,10 @@ const ShopRightSide = () => {
 
   useEffect(() => {
     setQuery("page", currentPage.toString());
-  }, []);
+  }, [currentPage, setQuery]);
 
-  useEffect(() => {
-    fetchProducts(query);
-  }, [query]);
-
-  const fetchProducts = async (queryParams: QueryParams) => {
-    const queryString = new URLSearchParams(queryParams).toString();
+  const fetchProducts = useCallback(async () => {
+    const queryString = new URLSearchParams(query).toString();
     try {
       const { data }: ProductsResponse = await fetcher(
         `/api/products?${queryString}`
@@ -51,7 +47,11 @@ const ShopRightSide = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [query]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handlePageChange = (page: number) => {
     if (

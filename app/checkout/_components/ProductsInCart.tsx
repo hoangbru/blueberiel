@@ -3,11 +3,9 @@
 import Link from "next/link";
 
 import { useCart } from "@/context/CartContext";
-import { useAppSetting } from "@/context/AppContext";
 import { formatPrice } from "@/utils/format";
 
 const ProductsInCart = () => {
-  const { settings } = useAppSetting();
   const { cart: products } = useCart();
 
   return (
@@ -17,15 +15,13 @@ const ProductsInCart = () => {
           return (
             <div className="pro-items" key={index}>
               <div className="image">
-                <Link href={`${settings.langPrefix}/product/${item.slug}`}>
+                <Link href={`/product/${item.slug}`}>
                   <img src={item.image} alt={`product-${item.variant.id}`} />
                 </Link>
               </div>
               <div className="items-contact">
                 <h4>
-                  <Link href={`${settings.langPrefix}/product/${item.slug}`}>
-                    {item.name}
-                  </Link>
+                  <Link href={`/product/${item.slug}`}>{item.name}</Link>
                 </h4>
 
                 <div className="inner-price">

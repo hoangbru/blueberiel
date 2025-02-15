@@ -4,11 +4,7 @@ import Link from "next/link";
 
 import { IconGridSquare, IconShield } from "@/components/icons";
 
-import { useAppSetting } from "@/context/AppContext";
-
 const MainMenu = () => {
-  const { settings } = useAppSetting();
-
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/shop", label: "Shop" },
@@ -50,10 +46,7 @@ const MainMenu = () => {
                 <ul className="navbar-nav">
                   {navItems.map((item, index) => (
                     <li className="nav-item" key={index}>
-                      <Link
-                        href={`${settings.langPrefix}${item.href}`}
-                        className="nav-link"
-                      >
+                      <Link href={`${item.href}`} className="nav-link">
                         {item.icon && item.icon} {item.label}
                       </Link>
                     </li>

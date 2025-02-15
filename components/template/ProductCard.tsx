@@ -7,7 +7,6 @@ import { QuickViewModal } from "@/components/template";
 import { Product } from "@/types/product";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatPrice } from "@/utils/format";
-import { useAppSetting } from "@/context/AppContext";
 
 interface ProductCardProps {
   product: Product;
@@ -16,7 +15,6 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
   const { wishlist, toggleWishlistItem } = useWishlist();
-  const { settings } = useAppSetting();
 
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
@@ -36,7 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
           <span className="flags">
             <span>New</span>
           </span>
-          <Link href={`${settings.langPrefix}/product/${product.slug}`}>
+          <Link href={`/product/${product.slug}`}>
             <div className="inner-img">
               <img
                 className="main-img"
@@ -72,9 +70,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
             <RatingStar rating={product.rating} />
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`${settings.langPrefix}/product/${product.slug}`}>
-              {product.name}
-            </Link>
+            <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h4>
           <div className="bb-price">
             <div className="inner-price">

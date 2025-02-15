@@ -11,7 +11,6 @@ import CartSidebar from "@/components/layout/header/_components/CartSidebar";
 import { CustomSelect } from "@/components/template";
 import MobileHeader from "./MobileHeader";
 
-import { useAppSetting } from "@/context/AppContext";
 import { useWishlist } from "@/context/WishlistContext";
 import api from "@/libs/axios";
 import { ResponseApi } from "@/types/response";
@@ -19,7 +18,6 @@ import { categories } from "@/data/categories";
 import { useUser } from "@/context/UserContext";
 
 const BottomHeader = () => {
-  const { settings } = useAppSetting();
   const { wishlist } = useWishlist();
   const router = useRouter();
   const { profile } = useUser();
@@ -31,13 +29,11 @@ const BottomHeader = () => {
   const logout = async () => {
     try {
       const { meta }: ResponseApi = await api.post("/api/logout");
-console.log(meta)
+
       toast.success(`${meta.message}`);
       localStorage.removeItem("_bbr_tk");
 
-      router.push(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${settings.langPrefix}/login`
-      );
+      router.push(`${process.env.NEXT_PUBLIC_BASE_URL}//login`);
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -52,7 +48,7 @@ console.log(meta)
               <div className="cols bb-logo-detail">
                 {/* Header Logo Start */}
                 <div className="header-logo">
-                  <Link href={`${settings.langPrefix}/`}>
+                  <Link href={`/`}>
                     <Image
                       src="/assets/img/logo/logo.png"
                       className="light"
@@ -117,17 +113,14 @@ console.log(meta)
                           <Fragment>
                             <li>
                               <Link
-                                href={`${settings.langPrefix}/register`}
+                                href={`/register`}
                                 className="dropdown-item"
                               >
                                 Register
                               </Link>
                             </li>
                             <li>
-                              <Link
-                                href={`${settings.langPrefix}/login`}
-                                className="dropdown-item"
-                              >
+                              <Link href={`/login`} className="dropdown-item">
                                 Login
                               </Link>
                             </li>
@@ -137,7 +130,7 @@ console.log(meta)
                           <Fragment>
                             <li>
                               <Link
-                                href={`${settings.langPrefix}/track-order`}
+                                href={`/track-order`}
                                 className="dropdown-item"
                               >
                                 Track Order
@@ -157,7 +150,7 @@ console.log(meta)
                       </ul>
                     </div>
                     <Link
-                      href={`${settings.langPrefix}/wishlist`}
+                      href={`/wishlist`}
                       className="bb-header-btn bb-wish-toggle"
                       title="Wishlist"
                     >
