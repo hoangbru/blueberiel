@@ -16,7 +16,6 @@ import {
   FooterContainer,
   HeaderContainer,
 } from "@/components/layout";
-import { PreLoader } from "@/components/template";
 
 import AppProviders from "@/providers/AppProviders";
 
@@ -56,7 +55,6 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <AppProviders>
-            <PreLoader />
             <HeaderContainer />
             <Toaster />
             {children}

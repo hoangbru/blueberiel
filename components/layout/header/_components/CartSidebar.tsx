@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Slider, { Settings } from "react-slick";
 
 import { IconCart } from "@/components/icons";
@@ -38,7 +39,12 @@ const CartSidebar = () => {
     return (
       <div className="bb-cart-banner mb-24">
         <div className="banner">
-          <img src="/assets/img/category/cart-banner.jpg" alt="cart-banner" />
+          <Image
+            src="/assets/img/category/cart-banner.jpg"
+            alt="cart-banner"
+            width={262}
+            height={393}
+          />
           <div className="detail">
             <h4>Organic & Fresh</h4>
             <h3>Vegetables</h3>
@@ -130,9 +136,11 @@ const CartSidebar = () => {
                           <i className="ri-close-line"></i>
                         </button>
                         <Link href="/product" className="bb-cart-pro-img">
-                          <img
+                          <Image
                             src={item.image}
                             alt={`product-${item.variant.id}`}
+                            width={103}
+                            height={103}
                           />
                         </Link>
                         <div className="bb-cart-contact">

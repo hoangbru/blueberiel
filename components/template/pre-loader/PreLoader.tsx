@@ -1,16 +1,15 @@
-"use client";
-
-import { useLoading } from "@/context/LoadingContext";
+import Image from "next/image";
 import "./pre-loader.css";
 
 const PreLoader = () => {
-  const { loading } = useLoading();
-
-  if (!loading) return null;
-
   return (
     <div className="bb-loader">
-      <img src="/assets/img/logo/loader.png" alt="loader" />
+      <Image
+        src="/assets/img/logo/loader.png"
+        alt="loader"
+        width={60}
+        height={60}
+      />
       <span className="loader"></span>
     </div>
   );

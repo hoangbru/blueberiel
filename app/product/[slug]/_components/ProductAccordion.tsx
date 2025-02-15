@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ProductAccordion = () => {
   return (
     <div className="bey-single-accordion">
@@ -135,7 +137,7 @@ const ProductAccordion = () => {
               <div className="bb-reviews">
                 <div className="reviews-bb-box">
                   <div className="inner-image">
-                    <img src="/assets/img/reviews/1.jpg" alt="img-1" />
+                    <Image src="/assets/img/reviews/1.jpg" alt="img-1" width={400} height={400} />
                   </div>
                   <div className="inner-contact">
                     <h4>Mariya Lykra</h4>
@@ -157,7 +159,7 @@ const ProductAccordion = () => {
                 </div>
                 <div className="reviews-bb-box">
                   <div className="inner-image">
-                    <img src="/assets/img/reviews/2.jpg" alt="img-2" />
+                    <Image src="/assets/img/reviews/2.jpg" alt="img-2" width={400} height={400}/>
                   </div>
                   <div className="inner-contact">
                     <h4>Saddika Alard</h4>

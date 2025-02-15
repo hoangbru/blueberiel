@@ -9,11 +9,11 @@ export default async function Product({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).slug;
+  const { slug } = await params
   return (
     <Fragment>
-      <Breadcrumb title="Product"/>
-      <ProductContainer slug={slug}/>
+      <Breadcrumb title="Product" />
+      {slug && <ProductContainer slug={slug} />}
     </Fragment>
   );
 }

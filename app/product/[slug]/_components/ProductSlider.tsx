@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import Slider, { Settings } from "react-slick";
+import Image from "next/image";
+
 import { ZoomImage } from "@/components/template";
 
 interface ProductSliderProps {
@@ -49,10 +51,12 @@ const ProductSlider: FC<ProductSliderProps> = ({ images }) => {
       >
         {images.map((image, index) => (
           <ZoomImage key={index}>
-            <img
+            <Image
               className="img-responsive"
               src={image}
               alt={`product-${index + 1}`}
+              width={419}
+              height={419}
             />
           </ZoomImage>
         ))}
@@ -66,10 +70,12 @@ const ProductSlider: FC<ProductSliderProps> = ({ images }) => {
       >
         {images.map((image, index) => (
           <div className="single-slide" key={index}>
-            <img
+            <Image
               className="img-responsive"
               src={image}
               alt={`thumb-${index + 1}`}
+              width={89}
+              height={89}
             />
           </div>
         ))}

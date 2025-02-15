@@ -1,3 +1,5 @@
+"use client";
+
 import { FormEvent, Fragment, useState } from "react";
 
 import { Input } from "@/components/base";

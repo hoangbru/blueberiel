@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const FooterBottom = () => {
   const [currentYear, setCurrentYear] = useState<number>(
@@ -31,7 +32,12 @@ const FooterBottom = () => {
             <div className="footer-bottom-right">
               <div className="footer-bottom-payment d-flex justify-content-center">
                 <div className="payment-link">
-                  <img src="/assets/img/payment/payment.png" alt="payment" />
+                  <Image
+                    src="/assets/img/payment/payment.png"
+                    alt="payment"
+                    width={335}
+                    height={30}
+                  />
                 </div>
               </div>
             </div>

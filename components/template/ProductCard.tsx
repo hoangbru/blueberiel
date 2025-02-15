@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import RatingStar from "@/components/template/RatingStar";
 import { QuickViewModal } from "@/components/template";
@@ -36,15 +37,19 @@ const ProductCard: FC<ProductCardProps> = ({ product, index }) => {
           </span>
           <Link href={`/product/${product.slug}`}>
             <div className="inner-img">
-              <img
+              <Image
                 className="main-img"
                 src={product.images[0]}
                 alt={`product-${product.slug}`}
+                width={260}
+                height={260}
               />
-              <img
+              <Image
                 className="hover-img"
                 src={product.images[1]}
                 alt={`product-${product.slug}`}
+                width={260}
+                height={260}
               />
             </div>
           </Link>

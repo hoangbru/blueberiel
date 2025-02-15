@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import ProductCard from "@/components/template/ProductCard";
 import SortSection from "./SortSection";
 import PaginationSection from "./PaginationSection";
 
-import { QueryParams, useQuery } from "@/context/QueryContext";
+import { useQuery } from "@/context/QueryContext";
 import { Product } from "@/types/product";
 import { ResponseApi } from "@/types/response";
 import { PaginationType } from "@/types/pagination";
@@ -18,20 +18,25 @@ type ProductsResponse = ResponseApi<{
 }>;
 
 const ShopRightSide = () => {
-  const { query, setQuery } = useQuery();
+  const { query } = useQuery();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<PaginationType | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const currentPage = parseInt(query.page || "1", 10);
-
-  useEffect(() => {
-    setQuery("page", currentPage.toString());
-  }, [currentPage, setQuery]);
+  const queryString = useMemo(() => {
+    const params = new URLSearchParams({
+      page: currentPage.toString(),
+      ...query,
+    });
+    return params.toString();
+  }, [query, currentPage]);
 
   const fetchProducts = useCallback(async () => {
-    const queryString = new URLSearchParams(query).toString();
+    setIsLoading(true);
+    setError(null);
+
     try {
       const { data }: ProductsResponse = await fetcher(
         `/api/products?${queryString}`
@@ -39,7 +44,6 @@ const ShopRightSide = () => {
       if (data) {
         setProducts(data.products);
         setPagination(data.pagination);
-        setError(null);
       }
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -47,20 +51,18 @@ const ShopRightSide = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [query]);
+  }, [queryString]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
   const handlePageChange = (page: number) => {
-    if (
-      pagination &&
-      page !== currentPage &&
-      page >= 1 &&
-      page <= pagination.totalPages
-    ) {
-      setQuery("page", page.toString());
+    if (!pagination) return;
+    const { totalPages } = pagination;
+
+    if (page !== currentPage && page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 

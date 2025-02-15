@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, Fragment, RefObject, useRef, useState } from "react";
+import Image from "next/image";
 import { useOnClickOutside } from "usehooks-ts";
 import "./quickview.css";
 
@@ -59,10 +60,12 @@ const QuickViewModal: FC<QuickViewModalProps> = ({ product }) => {
                       <div className="single-pro-img single-pro-img-no-sidebar">
                         <div className="single-product-scroll">
                           <ZoomImage>
-                            <img
+                            <Image
                               className="img-responsive"
                               src={product.images[0]}
                               alt="product-img"
+                              width={268}
+                              height={268}
                             />
                           </ZoomImage>
                         </div>

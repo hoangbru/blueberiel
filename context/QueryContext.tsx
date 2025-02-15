@@ -21,9 +21,7 @@ type QueryContextType = {
 const QueryContext = createContext<QueryContextType | undefined>(undefined);
 
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
-  const [query, setQueryState] = useState<QueryParams>({
-    page: "1",
-  });
+  const [query, setQueryState] = useState<QueryParams>({});
 
   const setQuery = (key: string, value: string) => {
     setQueryState((prev) => ({

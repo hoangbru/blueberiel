@@ -5,24 +5,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-import {
-  Button,
-  Input,
-  Label,
-  FieldError,
-} from "@/components/base";
+import { Button, Input, Label, FieldError } from "@/components/base";
 
-import { useLoading } from "@/context/LoadingContext";
 import { loginSchema } from "@/schemas/auth";
 import { AuthState } from "@/types/auth";
 import { mutation } from "@/utils/fetcher";
 import { ResponseApi } from "@/types/response";
 
-
 const LoginForm = () => {
   const router = useRouter();
-  const { showLoader, hideLoader, loading } = useLoading();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<AuthState>({
     message: { email: [], password: [] },
   });
@@ -51,7 +43,7 @@ const LoginForm = () => {
       return;
     }
 
-    showLoader();
+    setIsLoading(true);
     try {
       const apiResponse: ResponseApi<{ accessToken: string }> = await mutation(
         "/api/login",
@@ -63,7 +55,7 @@ const LoginForm = () => {
       if (apiResponse.meta.errors) {
         return toast.error(apiResponse.meta.message);
       }
-      
+
       const token = apiResponse.data?.accessToken;
       if (token) {
         localStorage.setItem("_bbr_tk", token);
@@ -71,13 +63,11 @@ const LoginForm = () => {
 
       formRef.current?.reset();
       toast.success(apiResponse.meta.message);
-      router.push(
-        `${process.env.NEXT_PUBLIC_BASE_URL}//`
-      );
+      router.push(`${process.env.NEXT_PUBLIC_BASE_URL}//`);
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
-      hideLoader();
+      setIsLoading(false);
     }
   };
 
@@ -103,7 +93,7 @@ const LoginForm = () => {
         <a href="javascript:void(0)">Forgot Password?</a>
       </div>
       <div className="bb-login-button">
-        <Button disabled={loading}>Login</Button>
+        <Button disabled={isLoading}>Login</Button>
         <Link href="register">Register</Link>
       </div>
     </form>

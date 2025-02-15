@@ -9,7 +9,7 @@ import ProductDetails from "./ProductDetails";
 import { Product } from "@/types/product";
 import { ResponseApi } from "@/types/response";
 import { fetcher } from "@/utils/fetcher";
-import { useLoading } from "@/context/LoadingContext";
+import { PreLoader } from "@/components/template";
 
 interface ProductContainerProps {
   slug: string;
@@ -20,27 +20,36 @@ type ProductResponse = ResponseApi<{
 }>;
 
 const ProductContainer = ({ slug }: ProductContainerProps) => {
-  const { showLoader, hideLoader } = useLoading();
   const [error, setError] = useState<string | null>(null);
   const [product, setProduct] = useState<Product | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchProduct = useCallback(async () => {
-    showLoader();
+    if (!slug) return;
+    setIsLoading(true);
+    setError(null);
+
     try {
       const { data }: ProductResponse = await fetcher(`/api/product/${slug}`);
-      setProduct(data?.product);
-      setError(null);
+
+      if (data?.product) {
+        setProduct(data.product);
+      } else {
+        setError("Product not found.");
+      }
     } catch (error) {
       console.error("Error fetching product:", error);
       setError("Failed to load product, please try again later.");
     } finally {
-      hideLoader();
+      setIsLoading(false);
     }
-  }, [hideLoader, showLoader, slug]);
+  }, [slug]);
 
   useEffect(() => {
     fetchProduct();
   }, [fetchProduct]);
+
+  if (isLoading) return <PreLoader />;
 
   return (
     <Fragment>

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import RatingStar from "@/components/template/RatingStar";
 import { QuickViewModal } from "@/components/template";
@@ -13,9 +14,11 @@ interface WishlistProductCardProps {
   index: number;
 }
 
-const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) => {
+const WishlistProductCard: FC<WishlistProductCardProps> = ({
+  product,
+  index,
+}) => {
   const { wishlist, toggleWishlistItem } = useWishlist();
-  
 
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
@@ -37,15 +40,19 @@ const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) =
           </span>
           <Link href={`/product/${product.slug}`}>
             <div className="inner-img">
-              <img
+              <Image
                 className="main-img"
                 src={product.images[0]}
                 alt={`product-${product.slug}`}
+                width={260}
+                height={260}
               />
-              <img
+              <Image
                 className="hover-img"
                 src={product.images[1]}
                 alt={`product-${product.slug}`}
+                width={260}
+                height={260}
               />
             </div>
           </Link>
@@ -71,9 +78,7 @@ const WishlistProductCard: FC<WishlistProductCardProps> = ({ product, index }) =
             <RatingStar rating={product.rating} />
           </div>
           <h4 className="bb-pro-title">
-            <Link href={`/product/${product.slug}`}>
-              {product.name}
-            </Link>
+            <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h4>
           <div className="bb-price">
             <div className="inner-price">

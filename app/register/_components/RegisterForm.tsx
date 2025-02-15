@@ -7,16 +7,13 @@ import toast from "react-hot-toast";
 
 import { Button, Input, Label, FieldError } from "@/components/base";
 
-import { useLoading } from "@/context/LoadingContext";
 import { mutation } from "@/utils/fetcher";
 import { registerSchema } from "@/schemas/auth";
 import { AuthState } from "@/types/auth";
 
 const RegisterForm = () => {
   const router = useRouter();
-
-  const { showLoader, hideLoader, loading } = useLoading();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<AuthState>({
     message: { email: [], password: [] },
   });
@@ -45,7 +42,7 @@ const RegisterForm = () => {
       return;
     }
 
-    showLoader();
+    setIsLoading(true);
     try {
       const apiResponse = await mutation(
         "/api/register",
@@ -64,7 +61,7 @@ const RegisterForm = () => {
     } catch (error) {
       console.error("Registration failed:", error);
     } finally {
-      hideLoader();
+      setIsLoading(false);
     }
   };
 
@@ -87,7 +84,7 @@ const RegisterForm = () => {
         <FieldError message={errors.message.password} />
       </div>
       <div className="bb-register-button">
-        <Button disabled={loading}>Register</Button>
+        <Button disabled={isLoading}>Register</Button>
         <Link href="login">Login</Link>
       </div>
     </form>

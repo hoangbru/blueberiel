@@ -1,25 +1,10 @@
-"use client";
-
-import { useEffect } from "react";
-
 import DeliveryMethod from "./DeliveryMethod";
 import PaymentMethod from "./PaymentMethod";
 import SummarrySection from "./SummarrySection";
 import BillingDetails from "./BillingDetails";
 import NewAccount from "./NewAccount";
 
-import { useLoading } from "@/context/LoadingContext";
-
 const CheckoutContainer = () => {
-  const { showLoader, hideLoader } = useLoading();
-
-  useEffect(() => {
-    showLoader();
-    setTimeout(() => {
-      hideLoader();
-    }, 600);
-  }, []);
-
   return (
     <section className="section-checkout padding-tb-50">
       <div className="container">

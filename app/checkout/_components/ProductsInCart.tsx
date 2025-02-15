@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/utils/format";
@@ -16,7 +17,12 @@ const ProductsInCart = () => {
             <div className="pro-items" key={index}>
               <div className="image">
                 <Link href={`/product/${item.slug}`}>
-                  <img src={item.image} alt={`product-${item.variant.id}`} />
+                  <Image
+                    src={item.image}
+                    alt={`product-${item.variant.id}`}
+                    width={80}
+                    height={80}
+                  />
                 </Link>
               </div>
               <div className="items-contact">

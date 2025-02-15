@@ -1,4 +1,6 @@
-import { ElementRef, FormEvent, useRef, useState } from "react";
+"use client";
+
+import {  FormEvent, useRef, useState } from "react";
 
 import ProductsInCart from "./ProductsInCart";
 import { Input } from "@/components/base";
@@ -26,7 +28,7 @@ const SummarrySection = () => {
 
   const CouponApplyForm = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const inputRef = useRef<ElementRef<"input">>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();

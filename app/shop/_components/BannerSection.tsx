@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const BannerSection = () => {
   return (
     <section className="section-bnr-details padding-t-50 mb-24">
@@ -13,7 +15,12 @@ const BannerSection = () => {
             <div className="col-lg-6 col-12 mb-24">
               <div className="bb-bnr-details">
                 <div className="bb-image">
-                  <img src="/assets/img/shop-bnr/one.jpg" alt="one" />
+                  <Image
+                    src="/assets/img/shop-bnr/one.jpg"
+                    alt="one"
+                    width={521}
+                    height={271}
+                  />
                 </div>
                 <div className="overlay-bnr"></div>
                 <div className="inner-contact">
@@ -30,7 +37,12 @@ const BannerSection = () => {
             <div className="col-lg-6 col-12 mb-24">
               <div className="bb-bnr-details">
                 <div className="bb-image">
-                  <img src="/assets/img/shop-bnr/two.jpg" alt="two" />
+                  <Image
+                    src="/assets/img/shop-bnr/two.jpg"
+                    alt="two"
+                    width={521}
+                    height={271}
+                  />
                 </div>
                 <div className="overlay-bnr"></div>
                 <div className="inner-contact">
