@@ -5,7 +5,13 @@ export interface AuthState {
 
 export interface User {
   id: string | number;
-  fullname: string;
+  fullName: string;
   email: string;
+  avatar: string;
   role: string;
+  phone: string;
+  address: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 }

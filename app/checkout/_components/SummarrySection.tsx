@@ -1,76 +1,27 @@
-"use client";
-
-import {  FormEvent, useRef, useState } from "react";
-
 import ProductsInCart from "./ProductsInCart";
-import { Input } from "@/components/base";
 
 import { useCart } from "@/context/CartContext";
 import { deliveryCharge } from "@/constants/value";
 import { formatPrice } from "@/utils/format";
+import { useOrder } from "@/context/OrderContext";
 
 const SummarrySection = () => {
   const { cart } = useCart();
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);
-  const couponDownBoxRef = useRef<HTMLDivElement | null>(null);
+  const { order } = useOrder();
+  // const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  // const couponDownBoxRef = useRef<HTMLDivElement | null>(null);
 
+  const shippingFee = order.deliveryMethod === "standard" ? 0 : deliveryCharge;
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const total = Math.max(subTotal + deliveryCharge - couponDiscount, 0);
+  const total = Math.max(subTotal + shippingFee, 0);
 
-  const handleToggleCollapsed = () => {
-    setIsCollapsed((prev) => !prev);
-    couponDownBoxRef.current?.classList.toggle("active", !isCollapsed);
-  };
-
-  const CouponApplyForm = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const inputRef = useRef<HTMLInputElement | null>(null);
-
-    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setIsLoading(true);
-
-      const formData = new FormData(event.currentTarget);
-      const data = {
-        couponCode: formData.get("coupon-code"),
-      };
-      try {
-        const res = await fetch("/api/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        const result = await res.json();
-        console.log("Response:", result);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    return (
-      <form onSubmit={onSubmit}>
-        <Input
-          id="coupon-code"
-          ref={inputRef}
-          className="bb-coupon"
-          placeholder="Enter Your coupon Code"
-          name="coupon-code"
-        />
-        <button disabled={isLoading} type="submit" className="bb-btn-2">
-          {isLoading ? "Loading..." : "Apply"}
-        </button>
-      </form>
-    );
-  };
+  // const handleToggleCollapsed = () => {
+  //   setIsCollapsed((prev) => !prev);
+  //   couponDownBoxRef.current?.classList.toggle("active", !isCollapsed);
+  // };
 
   return (
     <div
@@ -90,18 +41,18 @@ const SummarrySection = () => {
           </li>
           <li>
             <span className="left-item">Shipping</span>
-            <span>{formatPrice(deliveryCharge)}</span>
+            <span>{formatPrice(shippingFee)}</span>
           </li>
           <li>
             <span className="left-item">Shipping discount</span>
             <del style={{ color: "red" }}>{formatPrice(0)}</del>
           </li>
-          {!!couponDiscount && (
-            <li>
-              <span className="left-item">Total doupon discount</span>
-              <del style={{ color: "red" }}>{formatPrice(deliveryCharge)}</del>
-            </li>
-          )}
+
+          {/* Coupon discount */}
+          {/* <li>
+            <span className="left-item">Total coupon discount</span>
+            <del style={{ color: "red" }}>{formatPrice(deliveryCharge)}</del>
+          </li> */}
           <li style={{ padding: "5px 0" }}>
             <span className="left-item" style={{ fontWeight: "700" }}>
               Total (VAT included)
@@ -110,7 +61,8 @@ const SummarrySection = () => {
           </li>
         </ul>
       </div>
-      <div className="checkout-summary">
+      {/* Coupon Form */}
+      {/* <div className="checkout-summary">
         <ul>
           <li>
             <span className="left-item">Coupon Discount</span>
@@ -120,11 +72,11 @@ const SummarrySection = () => {
           </li>
           <li>
             <div className="coupon-down-box" ref={couponDownBoxRef}>
-              <CouponApplyForm />
+              <CouponForm />
             </div>
           </li>
         </ul>
-      </div>
+      </div> */}
       <ProductsInCart />
     </div>
   );

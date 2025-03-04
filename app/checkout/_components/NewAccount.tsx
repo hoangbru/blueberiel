@@ -1,17 +1,24 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState, useEffect, FormEvent, Fragment } from "react";
 import Link from "next/link";
 
 import { Input } from "@/components/base";
 
+import { useProfile } from "@/context/ProfileContext";
+
 const NewAccount = () => {
-  const [isNewAccount, setIsNewAccount] = useState<boolean>(false);
+  const { profile } = useProfile();
+  const [isNewAccount, setIsNewAccount] = useState<boolean>(!profile);
+
+  useEffect(() => {
+    setIsNewAccount(!profile);
+  }, [profile]);
 
   const handleAccountChange = (e: FormEvent<HTMLInputElement>) => {
-    setIsNewAccount(e.currentTarget.checked);
+    setIsNewAccount(e.currentTarget.id === "newAccount");
   };
-  
+
   return (
     <div
       className="bb-checkout-contact"
@@ -28,8 +35,8 @@ const NewAccount = () => {
             type="radio"
             id="existingAccount"
             name="account"
-            defaultChecked={!isNewAccount}
-            onChange={() => setIsNewAccount(false)}
+            checked={!isNewAccount}
+            onChange={handleAccountChange}
           />
           <label htmlFor="existingAccount">Register Account</label>
         </div>
@@ -44,17 +51,19 @@ const NewAccount = () => {
           <label htmlFor="newAccount">Guest Account</label>
         </div>
       </div>
-      <p>
-        By creating an account you will be able to shop faster, be up to date on
-        an order&apos;s status, and keep track of the orders you have previously
-        made.
-      </p>
       {isNewAccount && (
-        <div className="input-button" style={{ margin: "16px 0 0" }}>
-          <Link href={`/register`} className="bb-btn-2">
-            Register
-          </Link>
-        </div>
+        <Fragment>
+          <p>
+            By creating an account you will be able to shop faster, be up to
+            date on an order&apos;s status, and keep track of the orders you
+            have previously made.
+          </p>
+          <div className="input-button" style={{ margin: "16px 0 0" }}>
+            <Link href={`/register`} className="bb-btn-2">
+              Register
+            </Link>
+          </div>
+        </Fragment>
       )}
     </div>
   );

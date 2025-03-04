@@ -12,11 +12,12 @@ import toast from "react-hot-toast";
 import { Variant } from "@/types/product";
 
 export type CartItem = {
-  id: string | number;
+  productId: string | number;
   name: string;
   price: number;
   image: string;
   variant: Variant;
+  size: string;
   quantity: number;
   slug: string;
 };
@@ -39,7 +40,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
+    const storedCart = localStorage.getItem("bbr-cart");
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
@@ -58,7 +59,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => {
       const index = prevCart.findIndex(
         (item) =>
-          item.id === product.id && item.variant.id === product.variant.id
+          item.productId === product.productId &&
+          item.variant.id === product.variant.id
       );
 
       if (index !== -1) {
@@ -94,12 +96,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const removeItem = (id: string | number, variantId?: string | number) => {
     setCart((prevCart) => {
       const itemExists = prevCart.some(
-        (item) => item.id === id && item.variant.id === variantId
+        (item) => item.productId === id && item.variant.id === variantId
       );
       if (!itemExists) return prevCart;
 
       return prevCart.filter(
-        (item) => !(item.id === id && item.variant.id === variantId)
+        (item) => !(item.productId === id && item.variant.id === variantId)
       );
     });
   };
@@ -113,12 +115,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     setCart((prevCart) => {
       const itemExists = prevCart.some(
-        (item) => item.id === id && item.variant.id === variantId
+        (item) => item.productId === id && item.variant.id === variantId
       );
       if (!itemExists) return prevCart;
 
       return prevCart.map((item) =>
-        item.id === id && item.variant.id === variantId
+        item.productId === id && item.variant.id === variantId
           ? { ...item, quantity: Math.min(item.variant.stock, quantity) }
           : item
       );

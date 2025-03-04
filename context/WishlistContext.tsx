@@ -25,7 +25,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const [wishlist, setWishlist] = useState<Product[]>([]);
 
   useEffect(() => {
-    const storedWishlist = localStorage.getItem("wishlist");
+    const storedWishlist = localStorage.getItem("bbr-wishlist");
     if (storedWishlist) {
       setWishlist(JSON.parse(storedWishlist));
     }

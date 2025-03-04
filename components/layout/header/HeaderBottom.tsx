@@ -17,8 +17,8 @@ import { categories } from "@/data/categories";
 import { useProfile } from "@/context/ProfileContext";
 
 const BottomHeader = () => {
-  const { wishlist } = useWishlist();
   const router = useRouter();
+  const { wishlist } = useWishlist();
   const { profile, setProfile } = useProfile();
 
   const handleCategoryChange = (value: string) => {
@@ -60,6 +60,7 @@ const BottomHeader = () => {
                       alt="logo"
                       width={125}
                       height={43}
+                      priority
                     />
                     <Image
                       src="/assets/img/logo/logo-dark.png"

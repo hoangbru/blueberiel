@@ -131,7 +131,7 @@ const CartSidebar = () => {
                         <button
                           type="button"
                           className="cart-remove-item"
-                          onClick={() => removeItem(item.id, item.variant.id)}
+                          onClick={() => removeItem(item.productId, item.variant.id)}
                         >
                           <i className="ri-close-line"></i>
                         </button>
@@ -161,7 +161,7 @@ const CartSidebar = () => {
                               className="dec bb-qtybtn"
                               onClick={() =>
                                 updateQuantity(
-                                  item.id,
+                                  item.productId,
                                   item.quantity - 1,
                                   item.variant.id
                                 )
@@ -179,7 +179,7 @@ const CartSidebar = () => {
                               className="inc bb-qtybtn"
                               onClick={() =>
                                 updateQuantity(
-                                  item.id,
+                                  item.productId,
                                   item.quantity + 1,
                                   item.variant.id
                                 )

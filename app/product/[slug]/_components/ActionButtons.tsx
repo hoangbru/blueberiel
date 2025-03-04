@@ -32,12 +32,13 @@ const ActionButtons: FC<ActionButtonsProps> = ({
   const handleAddToCart = () => {
     if (outOfStock || quantity > variantSelected.stock) return;
     addItem({
-      id: product.id,
+      productId: product.id,
       name: product.name,
       price: product.price,
       variant: variantSelected,
       image: product.images[0],
       quantity,
+      size: variantSelected.size,
       slug: product.slug
     });
   };
