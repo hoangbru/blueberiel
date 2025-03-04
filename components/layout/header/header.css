@@ -313,7 +313,8 @@
   .bb-acc-drop
   .bb-dropdown-menu
   li
-  a {
+  a,
+span {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   font-size: 13px;
@@ -325,7 +326,14 @@
   .bb-acc-drop
   .bb-dropdown-menu
   li
-  a:hover {
+  a:hover,
+.bottom-header
+  .inner-bottom-header
+  .bb-header-buttons
+  .bb-acc-drop
+  .bb-dropdown-menu
+  li
+  span:hover {
   color: #6c7fd8;
 }
 .bottom-header .inner-bottom-header .bb-header-buttons .bb-btn-desc {

@@ -13,14 +13,13 @@ import MobileHeader from "./MobileHeader";
 
 import { useWishlist } from "@/context/WishlistContext";
 import api from "@/libs/axios";
-import { ResponseApi } from "@/types/response";
 import { categories } from "@/data/categories";
-import { useUser } from "@/context/UserContext";
+import { useProfile } from "@/context/ProfileContext";
 
 const BottomHeader = () => {
   const { wishlist } = useWishlist();
   const router = useRouter();
-  const { profile } = useUser();
+  const { profile, setProfile } = useProfile();
 
   const handleCategoryChange = (value: string) => {
     console.log("Selected city:", value);
@@ -28,14 +27,20 @@ const BottomHeader = () => {
 
   const logout = async () => {
     try {
-      const { meta }: ResponseApi = await api.post("/api/logout");
+      const response = await api.post("/api/logout");
+      const meta = response?.data?.meta;
 
-      toast.success(`${meta.message}`);
+      if (!meta || meta.errors) {
+        return toast.error(meta?.message || "Something went wrong!");
+      }
+
+      toast.success(meta.message);
       localStorage.removeItem("_bbr_tk");
-
-      router.push(`${process.env.NEXT_PUBLIC_BASE_URL}//login`);
+      setProfile(undefined);
+      router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/login`);
     } catch (error) {
       console.error("Logout failed:", error);
+      toast.error("Logout failed, please try again.");
     }
   };
 
@@ -137,13 +142,13 @@ const BottomHeader = () => {
                               </Link>
                             </li>
                             <li>
-                              <div
+                              <span
                                 style={{ cursor: "pointer" }}
                                 className="dropdown-item"
                                 onClick={logout}
                               >
                                 Logout
-                              </div>
+                              </span>
                             </li>
                           </Fragment>
                         )}

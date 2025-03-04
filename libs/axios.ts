@@ -10,6 +10,9 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
+    const status = error.response?.status || 500;
+    const defaultMessage = "An unexpected error occurred.";
+
     if (error.response?.status === 401) {
       try {
         // Refresh token API call
@@ -39,7 +42,12 @@ api.interceptors.response.use(
         // window.location.href = "/login";
       }
     }
-    return Promise.reject(error);
+
+    return Promise.reject({
+      success: false,
+      message: error.response?.data?.meta?.message || defaultMessage,
+      status,
+    });
   }
 );
 

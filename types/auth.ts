@@ -1,8 +1,6 @@
 export interface AuthState {
-  message: {
-    email: string[];
-    password: string[];
-  };
+  email?: string[] | undefined;
+  password?: string[] | undefined;
 }
 
 export interface User {
