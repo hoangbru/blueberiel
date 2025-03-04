@@ -7,7 +7,7 @@ import { AppSettingProvider } from "@/context/AppContext";
 import { CartProvider } from "@/context/CartContext";
 import { QueryProvider } from "@/context/QueryContext";
 import { WishlistProvider } from "@/context/WishlistContext";
-import { CheckoutProvider } from "@/context/CheckoutContext";
+import { OrderProvider } from "@/context/OrderContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 
 const AppProviders = ({ children }: { children: ReactNode }) => {
@@ -19,11 +19,11 @@ const AppProviders = ({ children }: { children: ReactNode }) => {
     <AppSettingProvider>
       <ProfileProvider>
         <CartProvider>
-          <CheckoutProvider>
+          <OrderProvider>
             <WishlistProvider>
               <QueryProvider>{children}</QueryProvider>
             </WishlistProvider>
-          </CheckoutProvider>
+          </OrderProvider>
         </CartProvider>
       </ProfileProvider>
     </AppSettingProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import {  FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import ProductsInCart from "./ProductsInCart";
 import { Input } from "@/components/base";
@@ -8,18 +8,23 @@ import { Input } from "@/components/base";
 import { useCart } from "@/context/CartContext";
 import { deliveryCharge } from "@/constants/value";
 import { formatPrice } from "@/utils/format";
+import { useOrder } from "@/context/OrderContext";
 
 const SummarrySection = () => {
   const { cart } = useCart();
+  const { order } = useOrder();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const couponDownBoxRef = useRef<HTMLDivElement | null>(null);
-
+  
+  const shippingFee =
+    order.deliveryMethod === "standard" ? 0 : deliveryCharge;
   const subTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const total = Math.max(subTotal + deliveryCharge - couponDiscount, 0);
+  const total = Math.max(subTotal + shippingFee - couponDiscount, 0);
 
   const handleToggleCollapsed = () => {
     setIsCollapsed((prev) => !prev);
@@ -55,7 +60,7 @@ const SummarrySection = () => {
         setIsLoading(false);
       }
     };
-    
+
     return (
       <form onSubmit={onSubmit}>
         <Input
@@ -90,7 +95,7 @@ const SummarrySection = () => {
           </li>
           <li>
             <span className="left-item">Shipping</span>
-            <span>{formatPrice(deliveryCharge)}</span>
+            <span>{formatPrice(shippingFee)}</span>
           </li>
           <li>
             <span className="left-item">Shipping discount</span>

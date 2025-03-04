@@ -1,6 +1,19 @@
+"use client";
+
+import { ChangeEvent } from "react";
+
+import { Input } from "@/components/base";
+
 import { formatPrice } from "@/utils/format";
+import { useOrder } from "@/context/OrderContext";
 
 const DeliveryMethod = () => {
+  const { order, setOrderItem } = useOrder();
+  
+  const handleRateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setOrderItem("deliveryMethod", event.target.id);
+  };
+
   return (
     <div
       className="checkout-items"
@@ -16,15 +29,27 @@ const DeliveryMethod = () => {
           <div className="inner-del">
             <span className="bb-del-head">Standard</span>
             <div className="radio-items">
-              <input type="radio" id="rate1" name="rate" />
-              <label htmlFor="rate1">Rate - {formatPrice(0)}</label>
+              <Input
+                type="radio"
+                id="standard"
+                name="rate"
+                checked={order.deliveryMethod === "standard"}
+                onChange={handleRateChange}
+              />
+              <label htmlFor="standard">Rate - {formatPrice(0)}</label>
             </div>
           </div>
           <div className="inner-del">
             <span className="bb-del-head">Express</span>
             <div className="radio-items">
-              <input type="radio" id="rate2" name="rate" />
-              <label htmlFor="rate2">Rate - {formatPrice(5)}</label>
+              <Input
+                type="radio"
+                id="express"
+                name="rate"
+                checked={order.deliveryMethod === "express"}
+                onChange={handleRateChange}
+              />
+              <label htmlFor="express">Rate - {formatPrice(2)}</label>
             </div>
           </div>
         </div>

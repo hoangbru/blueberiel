@@ -4,9 +4,11 @@ import { useState, useRef, RefObject } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
 const CustomSelect = ({
+  id,
   options,
   onChange,
 }: {
+  id?: string;
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
 }) => {
@@ -30,6 +32,7 @@ const CustomSelect = ({
     <div className="custom-select">
       <div className="select" ref={selectRef}>
         <select
+          id={id}
           className="hide-select"
           value={selected}
           onChange={(e) => handleSelect(e.target.value)}
