@@ -1,9 +1,19 @@
 import axios from "axios";
 
+import { refreshAccessToken } from "@/utils/helpers";
+
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("_bbr_tk");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 // Interceptor to handle token expiration
@@ -14,32 +24,15 @@ api.interceptors.response.use(
     const defaultMessage = "An unexpected error occurred.";
 
     if (error.response?.status === 401) {
-      try {
-        // Refresh token API call
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/refresh-token`,
-          {},
-          { withCredentials: true }
-        );
+      const newToken = await refreshAccessToken();
 
-        // Ensure we received a new token
-        if (!data?.data?.accessToken) {
-          throw new Error("No access token received");
-        }
-
-        // Store the new token
-        localStorage.setItem("_bbr_tk", data.data.accessToken);
-
+      if (newToken) {
+        localStorage.setItem("_bbr_tk", newToken);
         // Update the default Authorization header
-        api.defaults.headers.common.Authorization = `Bearer ${data.data.accessToken}`;
-
+        api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
         // Retry the original request with new token
-        error.config.headers.Authorization = `Bearer ${data.data.accessToken}`;
+        error.config.headers.Authorization = `Bearer ${newToken}`;
         return axios(error.config);
-      } catch {
-        console.error("Session expired. Redirecting to login...");
-        localStorage.removeItem("_bbr_tk");
-        // window.location.href = "/login";
       }
     }
 

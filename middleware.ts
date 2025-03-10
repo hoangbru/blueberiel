@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("_bbr_tk")?.value;
-  const protectedRoutes = ["/track-order"];
+  const token = req.cookies.get("refreshToken")?.value;
+  const protectedRoutes = ["/track-order", "/checkout", "/profile"];
 
   if (!token && protectedRoutes.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/login", req.url));
@@ -12,5 +12,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/track-order"],
+  matcher: ["/track-order", "/checkout", "/profile"],
 };

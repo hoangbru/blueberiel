@@ -15,19 +15,17 @@ import { User } from "@/types/auth";
 interface ProfileContextType {
   profile?: User;
   setProfile: Dispatch<SetStateAction<User | undefined>>;
-  fetchProfile: () => Promise<void>;
-  error: string | null;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<User | undefined>(undefined);
-  const [error, setError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(() =>
     localStorage.getItem("_bbr_tk")
   );
-
+  
+  
   useEffect(() => {
     const handleStorageChange = () => {
       setAccessToken(localStorage.getItem("_bbr_tk"));
@@ -45,10 +43,8 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     try {
       const user = await getProfile();
       setProfile(user);
-      setError(null);
     } catch (error) {
       console.error("Error fetching profile:", error);
-      setError("Failed to load profile, please try again later.");
     }
   }, [accessToken]);
 
@@ -57,9 +53,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   }, [fetchProfile]);
 
   return (
-    <ProfileContext.Provider
-      value={{ profile, setProfile, fetchProfile, error }}
-    >
+    <ProfileContext.Provider value={{ profile, setProfile }}>
       {children}
     </ProfileContext.Provider>
   );
